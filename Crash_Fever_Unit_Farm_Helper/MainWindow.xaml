@@ -1,0 +1,163 @@
+﻿<Window x:Class="Crash_Fever_Unit_Farm_Helper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Crash_Fever_Unit_Farm_Helper"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="1000" Width="1500" Background="#FFF1F1F1">
+
+    <Window.Resources>
+        <Style x:Key="HabenTextBlock" TargetType="TextBlock">
+            <Setter Property="Grid.Column" Value="1"/>
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="Text" Value="select unit"/>
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="MinWidth" Value="150"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="5 5"/>
+        </Style>
+        <Style x:Key="BrauchenTextBlock" TargetType="TextBlock">
+            <Setter Property="Grid.Column" Value="3"/>
+            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="Text" Value="select unit"/>
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="MinWidth" Value="150"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Padding" Value="5 5"/>
+        </Style>
+    </Window.Resources>
+
+
+    <Grid HorizontalAlignment="Stretch">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="13*"/>
+        </Grid.ColumnDefinitions>
+        <DockPanel  FlowDirection="LeftToRight" Margin="5">
+            <StackPanel>
+                <Label Content="Menü" FontSize="36" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Button x:Name="btnUnitOverview" Content="Unit Übersicht" FontSize="24" Click="btnUnitOverview_Click" Height="50"/>
+                <Button x:Name="btnToFarm" Content="Zum Farmen" FontSize="24" Click="btnToFarm_Click" Height="50"/>
+                <Button x:Name="btnUnitAdd" Content="Unit Hinzufügen" FontSize="24" Height="50" />
+            </StackPanel>
+        </DockPanel>
+        <DockPanel x:Name="farmView" Grid.Column="1" LastChildFill="False" HorizontalAlignment="Center">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <StackPanel Orientation="Vertical" Margin="5" HorizontalAlignment="Center">
+                    <Label Content="Noch zu Grinden" FontSize="36" HorizontalContentAlignment="Center"/>
+                    <ListView Height="auto">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+                <StackPanel Grid.Column="1" HorizontalAlignment="Center">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.Resources>
+                            <Style TargetType="Label">
+                                <Setter Property="FontSize" Value="22"/>
+                                <Setter Property="Padding" Value="5 5"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Label Content="Unit Stats" FontSize="36" Grid.ColumnSpan="4" HorizontalAlignment="Center"/>
+                        <Label Content="Haben" Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center"/>
+                        <Label Content="Brauchen" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center"/>
+                        <Label Content="Name" Grid.Row="2"/>
+                        <Label Content="Item 1" Grid.Row="3"/>
+                        <Label Content="Item 2" Grid.Row="4"/>
+                        <Label Content="Item 3" Grid.Row="5"/>
+                        <Label Content="Item 4" Grid.Row="6"/>
+                        <Label Content="Item 5" Grid.Row="7"/>
+                        <TextBlock Style="{StaticResource HabenTextBlock}" Grid.Row="2"/>
+                        <TextBlock Style="{StaticResource HabenTextBlock}" Grid.Row="3" />
+                        <TextBlock Style="{StaticResource HabenTextBlock}" Grid.Row="4" />
+                        <TextBlock Style="{StaticResource HabenTextBlock}" Grid.Row="5" />
+                        <TextBlock Style="{StaticResource HabenTextBlock}" Grid.Row="6" />
+                        <TextBlock Style="{StaticResource HabenTextBlock}" Grid.Row="7" />
+                        <Label Content="von" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center"/>
+                        <Label Content="von" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center"/>
+                        <Label Content="von" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center"/>
+                        <Label Content="von" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Center"/>
+                        <Label Content="von" Grid.Row="6" Grid.Column="2" HorizontalAlignment="Center"/>
+                        <Label Content="von" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Center"/>
+                        <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="2"/>
+                        <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="3"/>
+                        <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="4"/>
+                        <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="5"/>
+                        <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="6"/>
+                        <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="7"/>
+
+
+                        <Border BorderThickness="1" Grid.ColumnSpan="4" BorderBrush="Black"/>
+                        <!--  -->
+                        <Border BorderThickness="1" Grid.Row="1" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="1" Grid.Column="1" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="1" Grid.Column="2" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="1" Grid.Column="3" BorderBrush="Black"/>
+                        <!--  -->
+                        <Border BorderThickness="1" Grid.Row="2" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="3" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="4" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="5" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="6" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="7" BorderBrush="Black"/>
+                        <!--  -->
+                        <Border BorderThickness="1" Grid.Row="2" Grid.Column="1" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="3" Grid.Column="1" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="4" Grid.Column="1" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="5" Grid.Column="1" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="6" Grid.Column="1" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="7" Grid.Column="1" BorderBrush="Black"/>
+                        <!--  -->
+                        <Border BorderThickness="1" Grid.Row="2" Grid.Column="2" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="3" Grid.Column="2" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="4" Grid.Column="2" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="5" Grid.Column="2" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="6" Grid.Column="2" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="7" Grid.Column="2" BorderBrush="Black"/>
+                        <!--  -->
+                        <Border BorderThickness="1" Grid.Row="2" Grid.Column="3" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="3" Grid.Column="3" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="4" Grid.Column="3" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="5" Grid.Column="3" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="6" Grid.Column="3" BorderBrush="Black"/>
+                        <Border BorderThickness="1" Grid.Row="7" Grid.Column="3" BorderBrush="Black"/>
+                    </Grid>
+                </StackPanel>
+                <StackPanel/>
+            </Grid>
+            <Border BorderThickness="1" BorderBrush="Black"/>
+            <Border BorderThickness="1" BorderBrush="Black"/>
+        </DockPanel>
+        <Border BorderThickness="1" BorderBrush="Black"/>
+
+
+    </Grid>
+</Window>
+ 
