@@ -16,6 +16,7 @@ namespace Crash_Fever_Manager
 
             lBoxAwakeFarmenNochZuGrinden.ItemsSource = test;
             lBoxAwakeFarmenEvent.ItemsSource = test;
+            lBoxUnitUebersichtUnits.ItemsSource = test;
         }
 
         private void btnUnitUebersicht_Click(object sender, RoutedEventArgs e)
@@ -40,6 +41,14 @@ namespace Crash_Fever_Manager
             grdUnitHinzufuegen.Visibility = Visibility.Hidden;
             
             grdAwakeFarmen.Visibility = Visibility.Visible;
+        }
+
+        private void btnUnitUebersichtZuUnitUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            grdUnitUerbersicht.Visibility = Visibility.Hidden;
+            grdAwakeFarmen.Visibility = Visibility.Hidden;
+
+            grdUnitHinzufuegen.Visibility = Visibility.Visible;
         }
     }
 }
