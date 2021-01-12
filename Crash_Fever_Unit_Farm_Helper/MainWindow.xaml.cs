@@ -1,17 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Crash_Fever_Unit_Farm_Helper
 {
@@ -23,6 +11,11 @@ namespace Crash_Fever_Unit_Farm_Helper
         public MainWindow()
         {
             InitializeComponent();
+            List<string> test = new List<string>();
+            test.Add("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takim");
+
+            lBoxAwakeFarmenNochZuGrinden.ItemsSource = test;
+            lBoxAwakeFarmenEvent.ItemsSource = test;
         }
 
         private void btnToFarm_Click(object sender, RoutedEventArgs e)

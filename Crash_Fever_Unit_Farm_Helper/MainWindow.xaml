@@ -5,159 +5,232 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Crash_Fever_Unit_Farm_Helper"
         mc:Ignorable="d"
-        Title="MainWindow" Height="1000" Width="1500" Background="#FFF1F1F1">
-
+        Title="MainWindow" Height="1000" Width="1500">
+    <!--#region Styles-->
     <Window.Resources>
-        <Style x:Key="HabenTextBlock" TargetType="TextBlock">
-            <Setter Property="Grid.Column" Value="1"/>
-            <Setter Property="TextWrapping" Value="NoWrap"/>
-            <Setter Property="Text" Value="select unit"/>
-            <Setter Property="FontSize" Value="22"/>
-            <Setter Property="MinWidth" Value="150"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Padding" Value="5 5"/>
+        <Style x:Key="AutoWith" TargetType="ColumnDefinition">
+            <Setter Property="Width" Value="Auto"/>
         </Style>
-        <Style x:Key="BrauchenTextBlock" TargetType="TextBlock">
-            <Setter Property="Grid.Column" Value="3"/>
+        <Style x:Key="UnitStatsTextBlock" TargetType="TextBlock">
             <Setter Property="TextWrapping" Value="NoWrap"/>
-            <Setter Property="Text" Value="select unit"/>
             <Setter Property="FontSize" Value="22"/>
             <Setter Property="MinWidth" Value="150"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="Padding" Value="5 5"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style x:Key="UnitStatsTextBox" TargetType="TextBox">
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="MinWidth" Value="150"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Background" Value="DarkGray" />
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>
+        <Style x:Key="HabenTextBox" TargetType="TextBox" BasedOn="{StaticResource UnitStatsTextBox}">
+            <Setter Property="Grid.Column" Value="1"/>
+        </Style>
+        <Style x:Key="BrauchenTextBlock" TargetType="TextBlock" BasedOn="{StaticResource UnitStatsTextBlock}">
+            <Setter Property="Grid.Column" Value="3"/>
         </Style>
     </Window.Resources>
+    <!--#endregion-->
 
-
+    
     <Grid HorizontalAlignment="Stretch">
+        <!--#region Grid Main-->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="13*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <DockPanel  FlowDirection="LeftToRight" Margin="5">
+        <!--#endregion-->
+
+        <!--#region Menü-->
+        <Border BorderThickness="3" BorderBrush="Black" Background="DarkGray">
             <StackPanel>
                 <Label Content="Menü" FontSize="36" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-                <Button x:Name="btnUnitOverview" Content="Unit Übersicht" FontSize="24" Click="btnUnitOverview_Click" Height="50"/>
-                <Button x:Name="btnToFarm" Content="Zum Farmen" FontSize="24" Click="btnToFarm_Click" Height="50"/>
-                <Button x:Name="btnUnitAdd" Content="Unit Hinzufügen" FontSize="24" Height="50" />
+                <Button x:Name="btnUnitOverview" Content="Unit Übersicht" Padding="5" Margin="5 0 5 5" FontSize="24" Click="btnUnitOverview_Click" Height="50"/>
+                <Button x:Name="btnUnitAdd" Content="Unit Hinzufügen" Padding="5" Margin="5 0 5 5" FontSize="24" Height="50" />
+                <Button x:Name="btnToFarm" Content="Awake Farmen" Padding="5" Margin="5 0 5 5" FontSize="24" Click="btnToFarm_Click" Height="50"/>
             </StackPanel>
-        </DockPanel>
-        <DockPanel x:Name="farmView" Grid.Column="1" LastChildFill="False" HorizontalAlignment="Center">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Orientation="Vertical" Margin="5" HorizontalAlignment="Center">
-                    <Label Content="Noch zu Grinden" FontSize="36" HorizontalContentAlignment="Center"/>
-                    <ListView Height="auto">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </StackPanel>
-                <StackPanel Grid.Column="1" HorizontalAlignment="Center">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <Grid.Resources>
-                            <Style TargetType="Label">
-                                <Setter Property="FontSize" Value="22"/>
-                                <Setter Property="Padding" Value="5 5"/>
-                            </Style>
-                        </Grid.Resources>
-                        <Label Content="Unit Stats" FontSize="36" Grid.ColumnSpan="4" HorizontalAlignment="Center"/>
-                        <Label Content="Haben" Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center"/>
-                        <Label Content="Brauchen" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center"/>
-                        <Label Content="Name" Grid.Row="2"/>
-                        <Label Content="Item 1" Grid.Row="3"/>
-                        <Label Content="Item 2" Grid.Row="4"/>
-                        <Label Content="Item 3" Grid.Row="5"/>
-                        <Label Content="Item 4" Grid.Row="6"/>
-                        <Label Content="Item 5" Grid.Row="7"/>
-                        <TextBlock Style="{StaticResource HabenTextBlock}" Grid.Row="2"/>
-                        <TextBlock Style="{StaticResource HabenTextBlock}" Grid.Row="3" />
-                        <TextBlock Style="{StaticResource HabenTextBlock}" Grid.Row="4" />
-                        <TextBlock Style="{StaticResource HabenTextBlock}" Grid.Row="5" />
-                        <TextBlock Style="{StaticResource HabenTextBlock}" Grid.Row="6" />
-                        <TextBlock Style="{StaticResource HabenTextBlock}" Grid.Row="7" />
-                        <Label Content="von" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center"/>
-                        <Label Content="von" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center"/>
-                        <Label Content="von" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center"/>
-                        <Label Content="von" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Center"/>
-                        <Label Content="von" Grid.Row="6" Grid.Column="2" HorizontalAlignment="Center"/>
-                        <Label Content="von" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Center"/>
-                        <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="2"/>
-                        <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="3"/>
-                        <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="4"/>
-                        <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="5"/>
-                        <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="6"/>
-                        <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="7"/>
+        </Border>
+        <!--#endregion-->
+        <!--#region Awake Farmen View-->
+        <Grid x:Name="grdAwakeFarmen" Visibility="Visible" Grid.Column="1">
 
+            <!--#region Grid Definition-->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
 
-                        <Border BorderThickness="1" Grid.ColumnSpan="4" BorderBrush="Black"/>
-                        <!--  -->
-                        <Border BorderThickness="1" Grid.Row="1" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="1" Grid.Column="1" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="1" Grid.Column="2" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="1" Grid.Column="3" BorderBrush="Black"/>
-                        <!--  -->
-                        <Border BorderThickness="1" Grid.Row="2" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="3" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="4" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="5" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="6" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="7" BorderBrush="Black"/>
-                        <!--  -->
-                        <Border BorderThickness="1" Grid.Row="2" Grid.Column="1" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="3" Grid.Column="1" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="4" Grid.Column="1" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="5" Grid.Column="1" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="6" Grid.Column="1" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="7" Grid.Column="1" BorderBrush="Black"/>
-                        <!--  -->
-                        <Border BorderThickness="1" Grid.Row="2" Grid.Column="2" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="3" Grid.Column="2" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="4" Grid.Column="2" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="5" Grid.Column="2" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="6" Grid.Column="2" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="7" Grid.Column="2" BorderBrush="Black"/>
-                        <!--  -->
-                        <Border BorderThickness="1" Grid.Row="2" Grid.Column="3" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="3" Grid.Column="3" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="4" Grid.Column="3" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="5" Grid.Column="3" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="6" Grid.Column="3" BorderBrush="Black"/>
-                        <Border BorderThickness="1" Grid.Row="7" Grid.Column="3" BorderBrush="Black"/>
-                    </Grid>
-                </StackPanel>
-                <StackPanel/>
-            </Grid>
-            <Border BorderThickness="1" BorderBrush="Black"/>
-            <Border BorderThickness="1" BorderBrush="Black"/>
-        </DockPanel>
-        <Border BorderThickness="1" BorderBrush="Black"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
+            <!--#endregion-->
 
+            <!--#region Grid Ressources-->
+            <Grid.Resources>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Margin" Value="5"/>
+                </Style>
+            </Grid.Resources>
+            <!--#endregion-->
+
+            <!--#region Header and Border-->
+            <Border Grid.RowSpan="2" BorderThickness="0,3,3,3" BorderBrush="Black" Background="DarkGray"/>
+            <Label Content="Noch zu Grinden" FontSize="36" HorizontalContentAlignment="Center"/>
+            <Border Grid.Column="1" Grid.RowSpan="3" BorderThickness="0,3,3,3" BorderBrush="Black" Background="DarkGray"/>
+            <Label Grid.Column="1" Content="Unit Stats" FontSize="36"  HorizontalAlignment="Center"/>
+            <Border Grid.Column="2" Grid.RowSpan="3" BorderThickness="0,3,3,3" BorderBrush="Black" Background="DarkGray"/>
+            <Label Grid.Column="2" Content="Event" FontSize="36" HorizontalAlignment="Center"/>
+            <!--#endregion-->
+
+            <!--#region Noch zu Grinden -->
+            <StackPanel Grid.Row="1" Margin="5">
+                    <ListBox x:Name="lBoxAwakeFarmenNochZuGrinden">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollContentPresenter}, Path=ActualWidth}"/>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                    </ListBox>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnAwakeFarmenUpdate" Content="Update" FontSize="24" Margin="5 5 5 5"/>
+                    <Button Grid.Column="1" x:Name="btnAwakeFarmenFertig" Content="Fertig" FontSize="24" Margin=" 0 5 5 5"/>
+                </Grid>
+                
+            </StackPanel>
+        <!--#endregion-->
+
+            <!--#region Unit Stats -->
+            <StackPanel Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
+                <Grid>
+                    <!--#region Grid Definition-->
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Style="{StaticResource AutoWith}"/>
+                        <ColumnDefinition Style="{StaticResource AutoWith}"/>
+                        <ColumnDefinition Style="{StaticResource AutoWith}"/>
+                        <ColumnDefinition Style="{StaticResource AutoWith}"/>
+                    </Grid.ColumnDefinitions>
+                    <!--#endregion-->
+                    
+                    <!--#region Grid Ressources-->
+                    <Grid.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="FontSize" Value="22"/>
+                            <Setter Property="Margin" Value="5"/>
+                        </Style>
+                    </Grid.Resources>
+                    <!--#endregion-->
+                    
+                    <!--#region Content-->
+                    <Label Content="Haben" Grid.Row="1" Grid.Column="1" HorizontalContentAlignment="Center"/>
+                    <Label Content="Brauchen" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center"/>
+                    <Label Content="Name" Grid.Row="2"/>
+                    <Label Content="Item 1" Grid.Row="3"/>
+                    <Label Content="Item 2" Grid.Row="4"/>
+                    <Label Content="Item 3" Grid.Row="5"/>
+                    <Label Content="Item 4" Grid.Row="6"/>
+                    <Label Content="Item 5" Grid.Row="7"/>
+                    <TextBox Style="{StaticResource HabenTextBox}" Grid.Row="2"/>
+                    <TextBox Style="{StaticResource HabenTextBox}" Grid.Row="3" />
+                    <TextBox Style="{StaticResource HabenTextBox}" Grid.Row="4" />
+                    <TextBox Style="{StaticResource HabenTextBox}" Grid.Row="5" />
+                    <TextBox Style="{StaticResource HabenTextBox}" Grid.Row="6" />
+                    <TextBox Style="{StaticResource HabenTextBox}" Grid.Row="7" />
+                    <Label Content="von" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center"/>
+                    <Label Content="von" Grid.Row="3" Grid.Column="2" HorizontalAlignment="Center"/>
+                    <Label Content="von" Grid.Row="4" Grid.Column="2" HorizontalAlignment="Center"/>
+                    <Label Content="von" Grid.Row="5" Grid.Column="2" HorizontalAlignment="Center"/>
+                    <Label Content="von" Grid.Row="6" Grid.Column="2" HorizontalAlignment="Center"/>
+                    <Label Content="von" Grid.Row="7" Grid.Column="2" HorizontalAlignment="Center"/>
+                    <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="2"/>
+                    <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="3"/>
+                    <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="4"/>
+                    <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="5"/>
+                    <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="6"/>
+                    <TextBlock Style="{StaticResource BrauchenTextBlock}" Grid.Row="7"/>
+                    <!--#endregion-->
+
+                    <!--#region Grid Border-->
+                    <Border BorderThickness="1" Grid.Row="1" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="1" Grid.Column="1" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="1" Grid.Column="2" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="1" Grid.Column="3" BorderBrush="Black"/>
+
+                    <Border BorderThickness="1" Grid.Row="2" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="3" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="4" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="5" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="6" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="7" BorderBrush="Black"/>
+
+                    <Border BorderThickness="1" Grid.Row="2" Grid.Column="1" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="3" Grid.Column="1" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="4" Grid.Column="1" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="5" Grid.Column="1" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="6" Grid.Column="1" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="7" Grid.Column="1" BorderBrush="Black"/>
+
+                    <Border BorderThickness="1" Grid.Row="2" Grid.Column="2" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="3" Grid.Column="2" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="4" Grid.Column="2" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="5" Grid.Column="2" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="6" Grid.Column="2" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="7" Grid.Column="2" BorderBrush="Black"/>
+
+                    <Border BorderThickness="1" Grid.Row="2" Grid.Column="3" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="3" Grid.Column="3" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="4" Grid.Column="3" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="5" Grid.Column="3" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="6" Grid.Column="3" BorderBrush="Black"/>
+                    <Border BorderThickness="1" Grid.Row="7" Grid.Column="3" BorderBrush="Black"/>
+                    <!--#endregion-->
+                </Grid>
+            </StackPanel>
+            <!--#endregion-->
+
+            <!--#region Event-->
+            <DockPanel Grid.Row="1" Grid.Column="2" Margin="5" LastChildFill="False">
+                <ItemsControl x:Name="lBoxAwakeFarmenEvent" DockPanel.Dock="Top">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderThickness="1" BorderBrush="Black">
+                                <TextBlock Text="{Binding}" TextWrapping="Wrap"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </DockPanel>
+            <!--#endregion-->
+        </Grid>
+        <!--#endregion-->
     </Grid>
+
 </Window>
  
