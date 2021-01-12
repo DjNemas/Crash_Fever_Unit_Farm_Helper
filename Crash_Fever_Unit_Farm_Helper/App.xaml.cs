@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Crash_Fever_Unit_Farm_Helper
+namespace Crash_Fever_Manager
 {
     /// <summary>
     /// Interaction logic for App.xaml

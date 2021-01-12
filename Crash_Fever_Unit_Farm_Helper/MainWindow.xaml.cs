@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
 
-namespace Crash_Fever_Unit_Farm_Helper
+namespace Crash_Fever_Manager
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -18,16 +18,28 @@ namespace Crash_Fever_Unit_Farm_Helper
             lBoxAwakeFarmenEvent.ItemsSource = test;
         }
 
-        private void btnToFarm_Click(object sender, RoutedEventArgs e)
+        private void btnUnitUebersicht_Click(object sender, RoutedEventArgs e)
         {
-            //vBoxUnitOverview.Visibility = Visibility.Hidden;
-            //vBoxToFarm.Visibility = Visibility.Visible;
+            grdUnitHinzufuegen.Visibility = Visibility.Hidden;
+            grdAwakeFarmen.Visibility = Visibility.Hidden;
+            
+            grdUnitUerbersicht.Visibility = Visibility.Visible;
         }
 
-        private void btnUnitOverview_Click(object sender, RoutedEventArgs e)
+        private void btnUnitHinzufuegen_Click(object sender, RoutedEventArgs e)
         {
-            //vBoxToFarm.Visibility = Visibility.Hidden;
-            //vBoxUnitOverview.Visibility = Visibility.Visible;
+            grdUnitUerbersicht.Visibility = Visibility.Hidden;
+            grdAwakeFarmen.Visibility = Visibility.Hidden;
+
+            grdUnitHinzufuegen.Visibility = Visibility.Visible;
+        }
+
+        private void btnToFarm_Click(object sender, RoutedEventArgs e)
+        {
+            grdUnitUerbersicht.Visibility = Visibility.Hidden;
+            grdUnitHinzufuegen.Visibility = Visibility.Hidden;
+            
+            grdAwakeFarmen.Visibility = Visibility.Visible;
         }
     }
 }
