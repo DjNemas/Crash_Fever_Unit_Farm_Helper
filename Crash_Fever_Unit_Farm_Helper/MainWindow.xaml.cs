@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Crash_Fever_Manager
 {
@@ -17,38 +18,92 @@ namespace Crash_Fever_Manager
             lBoxAwakeFarmenNochZuGrinden.ItemsSource = test;
             lBoxAwakeFarmenEvent.ItemsSource = test;
             lBoxUnitUebersichtUnits.ItemsSource = test;
+            lBoxEventTimerEvents.ItemsSource = test;
+        }
+
+        private void btnUnitUebersichtZuUnitUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            btnUnitHinzufuegen_Click(sender, e);
         }
 
         private void btnUnitUebersicht_Click(object sender, RoutedEventArgs e)
         {
             grdUnitHinzufuegen.Visibility = Visibility.Hidden;
             grdAwakeFarmen.Visibility = Visibility.Hidden;
-            
-            grdUnitUerbersicht.Visibility = Visibility.Visible;
+            grdEventHinzufuegen.Visibility = Visibility.Hidden;
+            grdEventTimer.Visibility = Visibility.Hidden;
+
+            btnUnitHinzufuegen.Background = Brushes.LightGray;
+            btnAwakeFarmen.Background = Brushes.LightGray;
+            btnEventHinzufuegen.Background = Brushes.LightGray;
+            btnEventTimer.Background = Brushes.LightGray;
+
+            btnUnitUebersicht.Background = Brushes.LightBlue;
+            grdUnitUebersicht.Visibility = Visibility.Visible;
         }
 
         private void btnUnitHinzufuegen_Click(object sender, RoutedEventArgs e)
         {
-            grdUnitUerbersicht.Visibility = Visibility.Hidden;
+            grdUnitUebersicht.Visibility = Visibility.Hidden;
             grdAwakeFarmen.Visibility = Visibility.Hidden;
+            grdEventHinzufuegen.Visibility = Visibility.Hidden;
+            grdEventTimer.Visibility = Visibility.Hidden;
 
+            btnUnitUebersicht.Background = Brushes.LightGray;
+            btnAwakeFarmen.Background = Brushes.LightGray;
+            btnEventHinzufuegen.Background = Brushes.LightGray;
+            btnEventTimer.Background = Brushes.LightGray;
+
+            btnUnitHinzufuegen.Background = Brushes.LightBlue;
             grdUnitHinzufuegen.Visibility = Visibility.Visible;
         }
 
-        private void btnToFarm_Click(object sender, RoutedEventArgs e)
+        private void btnEventHinzufuegen_Click(object sender, RoutedEventArgs e)
         {
-            grdUnitUerbersicht.Visibility = Visibility.Hidden;
+            grdUnitUebersicht.Visibility = Visibility.Hidden;
+            grdAwakeFarmen.Visibility = Visibility.Hidden;
             grdUnitHinzufuegen.Visibility = Visibility.Hidden;
-            
+            grdEventTimer.Visibility = Visibility.Hidden;
+
+            btnUnitUebersicht.Background = Brushes.LightGray;
+            btnAwakeFarmen.Background = Brushes.LightGray;
+            btnUnitHinzufuegen.Background = Brushes.LightGray;
+            btnEventTimer.Background = Brushes.LightGray;
+
+            btnEventHinzufuegen.Background = Brushes.LightBlue;
+            grdEventHinzufuegen.Visibility = Visibility.Visible;
+        }
+
+        private void btnAwakeFarmen_Click(object sender, RoutedEventArgs e)
+        {
+            grdUnitUebersicht.Visibility = Visibility.Hidden;
+            grdUnitHinzufuegen.Visibility = Visibility.Hidden;
+            grdEventHinzufuegen.Visibility = Visibility.Hidden;
+            grdEventTimer.Visibility = Visibility.Hidden;
+
+            btnUnitUebersicht.Background = Brushes.LightGray;
+            btnUnitHinzufuegen.Background = Brushes.LightGray;
+            btnEventHinzufuegen.Background = Brushes.LightGray;
+            btnEventTimer.Background = Brushes.LightGray;
+
+            btnAwakeFarmen.Background = Brushes.LightBlue;
             grdAwakeFarmen.Visibility = Visibility.Visible;
         }
 
-        private void btnUnitUebersichtZuUnitUpdate_Click(object sender, RoutedEventArgs e)
+        private void btnEventTimer_Click(object sender, RoutedEventArgs e)
         {
-            grdUnitUerbersicht.Visibility = Visibility.Hidden;
+            grdUnitUebersicht.Visibility = Visibility.Hidden;
+            grdUnitHinzufuegen.Visibility = Visibility.Hidden;
+            grdEventHinzufuegen.Visibility = Visibility.Hidden;
             grdAwakeFarmen.Visibility = Visibility.Hidden;
 
-            grdUnitHinzufuegen.Visibility = Visibility.Visible;
+            btnUnitUebersicht.Background = Brushes.LightGray;
+            btnUnitHinzufuegen.Background = Brushes.LightGray;
+            btnEventHinzufuegen.Background = Brushes.LightGray;
+            btnAwakeFarmen.Background = Brushes.LightGray;
+
+            btnEventTimer.Background = Brushes.LightBlue;
+            grdEventTimer.Visibility = Visibility.Visible;
         }
     }
 }
