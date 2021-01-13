@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Crash_Fever_Manager.log.klassen;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 
@@ -9,9 +10,16 @@ namespace Crash_Fever_Manager
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Log _log;
+        private Console _console;
+
         public MainWindow()
         {
             InitializeComponent();
+            // Init Outputs For Console and Log
+            _console = new Console(this);
+            _log = new Log();
+
             List<string> test = new List<string>();
             test.Add("Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takim");
 

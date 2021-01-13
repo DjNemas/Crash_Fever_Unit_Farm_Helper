@@ -248,12 +248,13 @@
             </StackPanel>
             <StackPanel Grid.Column="2" >
                 <Label Content="Console" HorizontalContentAlignment="Center" FontSize="24"/>
-                <TextBlock x:Name="tBlockUnitAddConsole" 
+                <TextBlock x:Name="tBlockUnitHinzufuegenConsole"
+                           Background="Black" 
                            TextWrapping="Wrap" 
                            TextTrimming="WordEllipsis"
                            Width="auto" 
                            Height="auto" 
-                           MinHeight="200" Background="White" 
+                           MinHeight="200" 
                            Margin="0 5 0 0" FontSize="14"
                            Padding="5"
                            />
@@ -314,11 +315,12 @@
             <StackPanel Grid.Column="2" >
                 <Label Content="Console" HorizontalContentAlignment="Center" FontSize="24"/>
                 <TextBlock x:Name="tBlockEventHinzufuegenConsole" 
+                           Background="Black" 
                            TextWrapping="Wrap" 
                            TextTrimming="WordEllipsis"
                            Width="auto" 
                            Height="auto" 
-                           MinHeight="200" Background="White" 
+                           MinHeight="200"
                            Margin="0 5 0 0" FontSize="14"
                            Padding="5"
                            />
