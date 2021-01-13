@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Crash_Fever_Manager"
         mc:Ignorable="d"
         Title="Crash Fever Manager" Height="1000" Width="1500">
-    
+
     <!--#region Styles-->
     <Window.Resources>
         <Style x:Key="AutoWith" TargetType="ColumnDefinition">
@@ -47,7 +47,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <!--#endregion-->
-        
+
         <!--#region Grid Ressources-->
         <Grid.Resources>
             <Style TargetType="Button">
@@ -91,7 +91,7 @@
             <Label Content="Units" HorizontalContentAlignment="Center" FontSize="36"/>
             <Label Grid.Column="1" Content="Stats" HorizontalContentAlignment="Center" FontSize="36"/>
             <StackPanel Grid.Row="1" Margin="5">
-                <ListBox x:Name="lBoxUnitUebersichtUnits">
+                <ListBox x:Name="lBoxUnitUebersichtUnits" SelectionChanged="lBoxUnitUebersichtUnits_SelectionChanged">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
                             <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ScrollContentPresenter}, Path=ActualWidth}"/>
@@ -108,29 +108,37 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="btnUnitUebersichtZuUnitUpdate" Content="Zu Unit Update" FontSize="24" Margin="5 5 5 5" Click="btnUnitUebersichtZuUnitUpdate_Click"/>
+                    <Button x:Name="btnUnitUebersichtZuUnitUpdate"
+                            Content="Zu Unit Update"
+                            FontSize="24"
+                            Margin="5 5 5 5"
+                            Click="btnUnitUebersichtZuUnitUpdate_Click"
+                            IsEnabled="False"/>
                 </Grid>
             </StackPanel>
 
             <Grid Grid.Column="1" Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
+                    <ColumnDefinition Width="*"/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
 
                 <Grid.Resources>
                     <Style TargetType="Label">
                         <Setter Property="FontSize" Value="22"/>
-                        <Setter Property="Margin" Value="5 5 5 0"/>
+                        <Setter Property="Margin" Value="10 10 10 0"/>
                         <Setter Property="MinWidth" Value="200"/>
                     </Style>
-                    <Style TargetType="TextBlock">
+                    <Style TargetType="TextBox">
                         <Setter Property="FontSize" Value="22"/>
                         <Setter Property="TextWrapping" Value="NoWrap"/>
-                        <Setter Property="TextTrimming" Value="WordEllipsis"/>
                         <Setter Property="Grid.Column" Value="1"/>
                         <Setter Property="MinWidth" Value="250"/>
-                        <Setter Property="Margin" Value="5 5 5 0"/>
+                        <Setter Property="Margin" Value="10 10 10 0"/>
+                        <Setter Property="IsReadOnly" Value="True"/>
+                        <Setter Property="Background" Value="DarkGray"/>
+                        <Setter Property="BorderBrush" Value="DarkGray"/>
+                        <Setter Property="IsHitTestVisible" Value="False"/>
                         <Setter Property="Height" Value="{Binding ElementName=lblUnitUebersichtName, Path=ActualHeight}"/>
                     </Style>
                 </Grid.Resources>
@@ -138,36 +146,99 @@
                 <Border BorderThickness="0 3 3 3" BorderBrush="Black"/>
                 <Border Grid.Column="1" BorderThickness="0 3 3 3" BorderBrush="Black"/>
                 <StackPanel>
-                    <Label x:Name="lblUnitUebersichtName" Content="Name"/>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                        <Label x:Name="lblUnitUebersichtName" Content="Name"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <Label Content="Costs"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <Label Content="Stars"/>
+                        </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <Label Content="Element"/>
+                        </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <Label Content="Level"/>
+                        </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <Label Content="Bugs"/>
+                        </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <Label Content="Limit Break"/>
+                        </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <Label Content="Limit Break Bugs"/>
+                        </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <Label Content="Skill Level"/>
+                        </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <Label Content="Skill Level Max"/>
+                        </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <Label Content="Awake Item 1"/>
+                        </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <Label Content="Awake Item 2"/>
+                        </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <Label Content="Awake Item 3"/>
+                        </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <Label Content="Awake Item 4"/>
+                        </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
                     <Label Content="Awake Item 5"/>
+                        </Border>
+
                 </StackPanel>
                 <StackPanel Grid.Column="1">
-                    <TextBlock x:Name="tBoxUnitUebersichtName"/>
-                    <TextBlock x:Name="tBoxUnitUebersichtStars"/>
-                    <TextBlock x:Name="tBoxUnitUebersichtElement"/>
-                    <TextBlock x:Name="tBoxUnitUebersichtLevel"/>
-                    <TextBlock x:Name="lblUnitUebersichtBugs"/>
-                    <TextBlock x:Name="lblUnitUebersichtLimitBreak"/>
-                    <TextBlock x:Name="lblUnitUebersichtLimitBreakBugs"/>
-                    <TextBlock x:Name="lblUnitUebersichtSkillLevel"/>
-                    <TextBlock x:Name="lblUnitUebersichtSkillLevelMax"/>
-                    <TextBlock x:Name="lblUnitUebersichtAwakeItem1"/>
-                    <TextBlock x:Name="lblUnitUebersichtAwakeItem2"/>
-                    <TextBlock x:Name="lblUnitUebersichtAwakeItem3"/>
-                    <TextBlock x:Name="lblUnitUebersichtAwakeItem4"/>
-                    <TextBlock x:Name="lblUnitUebersichtAwakeItem5"/>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtName"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtCosts"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtStars"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtElement"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtLevel"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtBugs"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtLimitBreak"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtLimitBreakBugs"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtSkillLevel"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtSkillLevelMax"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtAwakeItem1"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtAwakeItem2"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtAwakeItem3"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtAwakeItem4"/>
+                    </Border>
+                    <Border BorderThickness="0 0 0 1" BorderBrush="Black">
+                    <TextBox x:Name="tBoxUnitUebersichtAwakeItem5"/>
+                    </Border>
                 </StackPanel>
 
             </Grid>
@@ -207,6 +278,7 @@
             <Border Grid.Column="2" BorderThickness="0 3 3 3" BorderBrush="Black"/>
             <StackPanel>
                 <Label x:Name="lblUnitHinzufuegenName" Content="Name"/>
+                <Label Content="Costs"/>
                 <Label Content="Stars"/>
                 <Label Content="Element"/>
                 <Label Content="Level"/>
@@ -220,26 +292,27 @@
                 <Label Content="Awake Item 3"/>
                 <Label Content="Awake Item 4"/>
                 <Label Content="Awake Item 5"/>
-                <Grid>
+                <Grid x:Name="grdUnitHinzufuegenConsoleBinding">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="btnUnitHinzufuegenHinzufuegen" Content="Hinzufügen" FontSize="20" Margin="3 3 0 3" Padding="2"/>
+                    <Button x:Name="btnUnitHinzufuegenHinzufuegen" Click="btnUnitHinzufuegenHinzufuegen_Click" Content="Hinzufügen" FontSize="20" Margin="3 3 0 3" Padding="2"/>
                     <Button x:Name="btnUnitUpdate" Grid.Column="1" Content="Update" FontSize="20" Margin="3 3 3 3" Padding="2"/>
                 </Grid>
 
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <TextBox x:Name="tBoxUnitHinzufuegenName"/>
-                <TextBox x:Name="tBoxUnitHinzufuegenStars"/>
+                <TextBox x:Name="tBoxUnitHinzufuegenCosts" PreviewTextInput="OnlyNumber"/>
+                <TextBox x:Name="tBoxUnitHinzufuegenStars" PreviewTextInput="OnlyNumber"/>
                 <TextBox x:Name="tBoxUnitHinzufuegenElement"/>
-                <TextBox x:Name="tBoxUnitHinzufuegenLevel"/>
-                <TextBox x:Name="tBoxUnitHinzufuegenBugs"/>
-                <TextBox x:Name="tBoxUnitHinzufuegenLimitBreak"/>
-                <TextBox x:Name="tBoxUnitHinzufuegenLimitBreakBugs"/>
-                <TextBox x:Name="tBoxUnitHinzufuegenSkillLevel"/>
-                <TextBox x:Name="tBoxUnitHinzufuegenSkillLevelMax"/>
+                <TextBox x:Name="tBoxUnitHinzufuegenLevel" PreviewTextInput="OnlyNumber"/>
+                <TextBox x:Name="tBoxUnitHinzufuegenBugs" PreviewTextInput="OnlyNumber"/>
+                <TextBox x:Name="tBoxUnitHinzufuegenLimitBreak" PreviewTextInput="OnlyNumber"/>
+                <TextBox x:Name="tBoxUnitHinzufuegenLimitBreakBugs" PreviewTextInput="OnlyNumber"/>
+                <TextBox x:Name="tBoxUnitHinzufuegenSkillLevel" PreviewTextInput="OnlyNumber"/>
+                <TextBox x:Name="tBoxUnitHinzufuegenSkillLevelMax" PreviewTextInput="OnlyNumber"/>
                 <TextBox x:Name="tBoxUnitHinzufuegenAwakeItem1"/>
                 <TextBox x:Name="tBoxUnitHinzufuegenAwakeItem2"/>
                 <TextBox x:Name="tBoxUnitHinzufuegenAwakeItem3"/>
@@ -248,23 +321,25 @@
             </StackPanel>
             <StackPanel Grid.Column="2" >
                 <Label Content="Console" HorizontalContentAlignment="Center" FontSize="24"/>
-                <TextBlock x:Name="tBlockUnitHinzufuegenConsole"
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" MaxHeight="{Binding ElementName=grdUnitHinzufuegen, Path=ActualHeight}">
+                    <TextBlock x:Name="tBlockUnitHinzufuegenConsole"
                            Background="Black" 
                            TextWrapping="Wrap" 
                            TextTrimming="WordEllipsis"
                            Width="auto" 
-                           Height="auto" 
-                           MinHeight="200" 
-                           Margin="0 5 0 0" FontSize="14"
+                           MinHeight="200"
+                           Margin="0 5 0 0" 
+                           FontSize="14"
                            Padding="5"
                            />
+                </ScrollViewer>
             </StackPanel>
         </Grid>
         <!--#endregion-->
 
         <!--#region Event Hinzufügen-->
         <Grid x:Name="grdEventHinzufuegen" Visibility="Hidden" Grid.Column="1">
-            
+
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto"/>
                 <ColumnDefinition Width="auto" />
@@ -502,7 +577,7 @@
             <!--#endregion-->
         </Grid>
         <!--#endregion-->
-        
+
         <!--#region Event Timer-->
         <Grid x:Name="grdEventTimer" Visibility="Hidden" Grid.Column="1">
             <Grid.RowDefinitions>
@@ -528,7 +603,7 @@
                 <Label x:Name="lblEventTimerVerbleibendeZeit" Grid.Column="1" Content="[Verbleinende Zeit]" FontSize="36"/>
             </StackPanel>
             <Label Grid.Column="1" Content="Event Stats" FontSize="36" HorizontalAlignment="Center"/>
-            
+
             <StackPanel Grid.Row="1">
                 <ListBox x:Name="lBoxEventTimerEvents">
                     <ListBox.ItemContainerStyle>
@@ -549,41 +624,41 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                
-                <Grid.Resources>
-                    <Style TargetType="Label">
-                        <Setter Property="FontSize" Value="22"/>
-                        <Setter Property="Margin" Value="5 5 5 0"/>
-                        <Setter Property="MinWidth" Value="200"/>
-                    </Style>
-                    <Style TargetType="TextBox">
-                        <Setter Property="FontSize" Value="22"/>
-                        <Setter Property="TextWrapping" Value="Wrap"/>
-                        <Setter Property="Grid.Column" Value="1"/>
-                        <Setter Property="MinWidth" Value="250"/>
-                        <Setter Property="Margin" Value="5 5 5 0"/>
-                        <Setter Property="Height" Value="{Binding ElementName=lblEventHinzufuegenName, Path=ActualHeight}"/>
-                    </Style>
-                    <Style TargetType="StackPanel">
-                        <Setter Property="Margin" Value="5"/>
-                    </Style>
-                </Grid.Resources>
-                
-                <StackPanel>
-                    <Label x:Name="lblUnitEventHinzufuegenName" Content="Name"/>
-                    <Label Content="Datum von"/>
-                    <Label Content="Datum bis"/>
-                    <Label Content="Diff"/>
-                    <Label Content="Item"/>
 
-                </StackPanel>
-                <StackPanel Grid.Column="1">
-                    <TextBox x:Name="tBoxEventTimerName"/>
-                    <TextBox x:Name="tBoxEventTimerDatumVon"/>
-                    <TextBox x:Name="tBoxEventTimerDatumBis"/>
-                    <TextBox x:Name="tBoxEventTimerDiff"/>
-                    <TextBox x:Name="tBoxEventTimerItem"/>
-                </StackPanel>
+                    <Grid.Resources>
+                        <Style TargetType="Label">
+                            <Setter Property="FontSize" Value="22"/>
+                            <Setter Property="Margin" Value="5 5 5 0"/>
+                            <Setter Property="MinWidth" Value="200"/>
+                        </Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="FontSize" Value="22"/>
+                            <Setter Property="TextWrapping" Value="Wrap"/>
+                            <Setter Property="Grid.Column" Value="1"/>
+                            <Setter Property="MinWidth" Value="250"/>
+                            <Setter Property="Margin" Value="5 5 5 0"/>
+                            <Setter Property="Height" Value="{Binding ElementName=lblEventHinzufuegenName, Path=ActualHeight}"/>
+                        </Style>
+                        <Style TargetType="StackPanel">
+                            <Setter Property="Margin" Value="5"/>
+                        </Style>
+                    </Grid.Resources>
+
+                    <StackPanel>
+                        <Label x:Name="lblUnitEventHinzufuegenName" Content="Name"/>
+                        <Label Content="Datum von"/>
+                        <Label Content="Datum bis"/>
+                        <Label Content="Diff"/>
+                        <Label Content="Item"/>
+
+                    </StackPanel>
+                    <StackPanel Grid.Column="1">
+                        <TextBox x:Name="tBoxEventTimerName"/>
+                        <TextBox x:Name="tBoxEventTimerDatumVon"/>
+                        <TextBox x:Name="tBoxEventTimerDatumBis"/>
+                        <TextBox x:Name="tBoxEventTimerDiff"/>
+                        <TextBox x:Name="tBoxEventTimerItem"/>
+                    </StackPanel>
                 </Grid>
             </StackPanel>
 
