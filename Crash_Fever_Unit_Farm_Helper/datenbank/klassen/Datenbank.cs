@@ -35,6 +35,11 @@ namespace Crash_Fever_Manager.datenbank.klassen
 
         public static List<Units> GetUnitsDB(string datenbank, int? byID = null)
         {
+            if (!_existOrdner)
+            {
+                _errorOrdner = ErstelleOrdner();
+            }
+
             StreamReader sr = new StreamReader(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss + datenbank + ".json");
             List<Units> obj = JsonConvert.DeserializeObject<List<Units>>(sr.ReadToEnd());
             sr.Close();
