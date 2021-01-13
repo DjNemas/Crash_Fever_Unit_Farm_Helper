@@ -40,6 +40,11 @@ namespace Crash_Fever_Manager.datenbank.klassen
                 _errorOrdner = ErstelleOrdner();
             }
 
+            if (!File.Exists(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss + datenbank + ".json"))
+            {
+                return null;
+            }
+
             StreamReader sr = new StreamReader(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss + datenbank + ".json");
             List<Units> obj = JsonConvert.DeserializeObject<List<Units>>(sr.ReadToEnd());
             sr.Close();
