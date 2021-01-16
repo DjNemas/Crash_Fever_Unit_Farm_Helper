@@ -91,5 +91,11 @@ namespace Crash_Fever_Manager.datenbank.klassen
             }
             UpdateChanges(itemsDB);
         }
+
+        public List<Items> SortByName(List<Items> list)
+        {
+            list.Sort((x, y) => string.Compare(x.Name, y.Name));
+            return list;
+        }
     }
 }

@@ -18,8 +18,6 @@ namespace Crash_Fever_Manager
             InitializeComponent();
 
             this.InitAll();
-
-            
         }
 
         private void InitAll()
@@ -28,13 +26,26 @@ namespace Crash_Fever_Manager
             Log.Init();
             Datenbank.Init();
 
+
+            // Init Units for ListBox
             Units units = new Units();
-            //Sort List
             List<Units> unitsList = units.GetAllFromDB();
-            unitsList = units.SortByName(unitsList);
+            if (unitsList != null)
+            {
+                unitsList = units.SortByName(unitsList);
+            }
             // Init UnitDBToList
             lBoxUnitUebersichtUnits.ItemsSource = unitsList;
 
+
+            // Init Items for ComboBox
+            Items items = new Items();
+            List<Items> itemsList = items.GetAllFromDB();
+            if (itemsList != null)
+            {
+                itemsList = items.SortByName(itemsList);
+            }
+            cbItemHinzufügenItems.ItemsSource = itemsList;
         }
 
         #region MENÜ BUTTONS
@@ -57,11 +68,32 @@ namespace Crash_Fever_Manager
 
         private void btnItemHinzufuegen_Click(object sender, RoutedEventArgs e)
         {
+            tBoxItemHinzufuegenName.Text = "";
+            btnItemHinzufuegenAbwaehlen.IsEnabled = false;
+            btnItemHinzufuegenUpdate.IsEnabled = false;
+            btnItemHinzufuegenHinzufuegen.IsEnabled = true;
+            btnItemHinzufuegenAbwaehlen.Visibility = Visibility.Hidden;
+            btnItemHinzufuegenHinzufuegen.Visibility = Visibility.Visible;
+
+            ConsoleUI.ConsoleItem("Neues Item kann hinzugefügt werden.");
             ViewSelectItemHinzufuegen();
         }
 
         private void btnEventHinzufuegen_Click(object sender, RoutedEventArgs e)
         {
+            
+            dpEventHinzufuegenDatumBegin.SelectedDate = DateTime.Now;
+            dpEventHinzufuegenDatumEnde.SelectedDate = DateTime.Now;
+            tpEventHinzufuegenBeginVon.Value = DateTime.Now;
+            tpEventHinzufuegenBeginBis.Value = DateTime.Now;
+            tpEventHinzufuegenEndeVon.Value = DateTime.Now;
+            tpEventHinzufuegenEndeBis.Value = DateTime.Now;
+            btnEventHinzufuegenUpdate.IsEnabled = false;
+            btnEventHinzufuegenAbwaehlen.IsEnabled = false;
+            btnEventHinzufuegenHinzufuegen.IsEnabled = true;
+            btnEventHinzufuegenAbwaehlen.Visibility = Visibility.Hidden;
+            btnEventHinzufuegenHinzufuegen: Visibility = Visibility.Visible;
+            ConsoleUI.ConsoleUnit("Neue Unit kann hinzugefügt werden.");
             ViewSelectEventHinzufuegen();
         }
 
@@ -81,6 +113,8 @@ namespace Crash_Fever_Manager
         #region BUTTON
         private void btnUnitUebersichtZuUnitUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if (lBoxUnitUebersichtUnits.SelectedItem == null) return;
+
             btnUnitHinzufuegenUnitUpdate.IsEnabled = true;
             btnUnitHinzufuegenHinzufuegen.IsEnabled = false;
             Units selectedUnit = (Units)lBoxUnitUebersichtUnits.SelectedItem;
@@ -90,6 +124,7 @@ namespace Crash_Fever_Manager
 
         private void btnUnitUebersichtName_Click(object sender, RoutedEventArgs e)
         {
+            btnUnitUebersichtZuUnitUpdate.IsEnabled = false;
             Units unit = new Units();
             List<Units> unitList = unit.GetAllFromDB();
             unitList = unit.SortByName(unitList);
@@ -99,6 +134,7 @@ namespace Crash_Fever_Manager
 
         private void btnUnitUebersichtStars_Click(object sender, RoutedEventArgs e)
         {
+            btnUnitUebersichtZuUnitUpdate.IsEnabled = false;
             Units unit = new Units();
             List<Units> unitList = unit.GetAllFromDB();
             unitList = unit.SortByStars(unitList);
@@ -108,6 +144,7 @@ namespace Crash_Fever_Manager
 
         private void btnUnitUebersichtCosts_Click(object sender, RoutedEventArgs e)
         {
+            btnUnitUebersichtZuUnitUpdate.IsEnabled = false;
             Units unit = new Units();
             List<Units> unitList = unit.GetAllFromDB();
             unitList = unit.SortByCosts(unitList);
@@ -210,38 +247,29 @@ namespace Crash_Fever_Manager
 
         private void btnUnitHinzufuegenUnitUpdate_Click(object sender, RoutedEventArgs e)
         {
+            if (TextfeldLeerConsole(tBoxUnitHinzufuegenName.Text).Equals("")) return;
+            if (TextfeldLeerConsole(tBoxUnitHinzufuegenCosts.Text).Equals("")) return;
+            if (TextfeldLeerConsole(tBoxUnitHinzufuegenStars.Text).Equals("")) return;
+            if (TextfeldLeerConsole(tBoxUnitHinzufuegenElement.Text).Equals("")) return;
+            if (TextfeldLeerConsole(tBoxUnitHinzufuegenLevel.Text).Equals("")) return;
+            if (TextfeldLeerConsole(tBoxUnitHinzufuegenLimitBreak.Text).Equals("")) return;
+            if (TextfeldLeerConsole(tBoxUnitHinzufuegenLimitBreakBugs.Text).Equals("")) return;
+            if (TextfeldLeerConsole(tBoxUnitHinzufuegenSkillLevel.Text).Equals("")) return;
+            if (TextfeldLeerConsole(tBoxUnitHinzufuegenSkillLevelMax.Text).Equals("")) return;
+
             Units unit = new Units();
             Units selectedUnit = (Units)lBoxUnitUebersichtUnits.SelectedItem;
             unit = unit.GetSingleFromDB(selectedUnit.ID);
-
-            if (TextfeldLeerConsole(tBoxUnitHinzufuegenName.Text).Equals("")) return;
+            
             unit.Name = tBoxUnitHinzufuegenName.Text;
-
-            if (TextfeldLeerConsole(tBoxUnitHinzufuegenCosts.Text).Equals("")) return;
             unit.Costs = Convert.ToInt32(tBoxUnitHinzufuegenCosts.Text);
-
-            if (TextfeldLeerConsole(tBoxUnitHinzufuegenStars.Text).Equals("")) return;
             unit.Stars = Convert.ToInt32(tBoxUnitHinzufuegenStars.Text);
-
-            if (TextfeldLeerConsole(tBoxUnitHinzufuegenElement.Text).Equals("")) return;
             unit.Element = tBoxUnitHinzufuegenElement.Text;
-
-            if (TextfeldLeerConsole(tBoxUnitHinzufuegenLevel.Text).Equals("")) return;
             unit.Level = Convert.ToInt32(tBoxUnitHinzufuegenLevel.Text);
-
-            if (TextfeldLeerConsole(tBoxUnitHinzufuegenBugs.Text).Equals("")) return;
             unit.Bugs = Convert.ToInt32(tBoxUnitHinzufuegenBugs.Text);
-
-            if (TextfeldLeerConsole(tBoxUnitHinzufuegenLimitBreak.Text).Equals("")) return;
             unit.LimitBreak = Convert.ToInt32(tBoxUnitHinzufuegenLimitBreak.Text);
-
-            if (TextfeldLeerConsole(tBoxUnitHinzufuegenLimitBreakBugs.Text).Equals("")) return;
             unit.LimitBreakBugs = Convert.ToInt32(tBoxUnitHinzufuegenLimitBreakBugs.Text);
-
-            if (TextfeldLeerConsole(tBoxUnitHinzufuegenSkillLevel.Text).Equals("")) return;
             unit.SkillLevel = Convert.ToInt32(tBoxUnitHinzufuegenSkillLevel.Text);
-
-            if (TextfeldLeerConsole(tBoxUnitHinzufuegenSkillLevelMax.Text).Equals("")) return;
             unit.SkillLevelMax = Convert.ToInt32(tBoxUnitHinzufuegenSkillLevelMax.Text);
 
             unit.UpdateSingle(unit);
@@ -276,7 +304,122 @@ namespace Crash_Fever_Manager
 
         #endregion
 
+        #region ITEM HINZUFÜGEN
+
+        #region BUTTONS
+        private void btnItemHinzufuegenHinzufuegen_Click(object sender, RoutedEventArgs e)
+        {
+            Items items = new Items();
+
+            if (TextfeldLeerConsole(tBoxItemHinzufuegenName.Text).Equals("")) return;
+            items.Name = tBoxItemHinzufuegenName.Text;
+
+            items.AddToDB();
+
+            List<Items> itemsList = items.GetAllFromDB();
+            itemsList = items.SortByName(itemsList);
+
+            cbItemHinzufügenItems.ItemsSource = itemsList;
+
+            btnItemHinzufuegenAbwaehlen.IsEnabled = false;
+            btnItemHinzufuegenAbwaehlen.Visibility = Visibility.Hidden;
+
+            btnItemHinzufuegenUpdate.IsEnabled = false;
+
+            btnItemHinzufuegenHinzufuegen.IsEnabled = true;
+            btnItemHinzufuegenHinzufuegen.Visibility = Visibility.Visible;
+
+            tBoxItemHinzufuegenName.Text = "";
+
+            ConsoleUI.ConsoleItem("Item " + items.Name + " hinzugefügt");
+        }
+
+        private void btnItemHinzufuegenAbwaehlen_Click(object sender, RoutedEventArgs e)
+        {
+            Items item = (Items)cbItemHinzufügenItems.SelectedItem;
+            ConsoleUI.ConsoleItem("Item " + item.Name + " wurde abgewählt");
+            cbItemHinzufügenItems.SelectedItem = null;
+            tBoxItemHinzufuegenName.Text = "";
+
+            btnItemHinzufuegenAbwaehlen.IsEnabled = false;
+            btnItemHinzufuegenAbwaehlen.Visibility = Visibility.Hidden;
+
+            btnItemHinzufuegenUpdate.IsEnabled = false;
+
+            btnItemHinzufuegenHinzufuegen.IsEnabled = true;
+            btnItemHinzufuegenHinzufuegen.Visibility = Visibility.Visible;
+
+        }
+
+        private void btnItemHinzufuegenUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            if (cbItemHinzufügenItems.SelectedItem == null) return;
+            if (TextfeldLeerConsole(tBoxItemHinzufuegenName.Text).Equals("")) return;
+
+            Items item = new Items();
+            Items selectedItem = (Items)cbItemHinzufügenItems.SelectedItem;
+            item = item.GetSingleFromDB(selectedItem.ID);
+            item.Name = tBoxItemHinzufuegenName.Text;
+            item.UpdateSingle(item);
+
+            List<Items> itemsList = item.GetAllFromDB();
+            itemsList = item.SortByName(itemsList);
+
+            cbItemHinzufügenItems.ItemsSource = itemsList;
+
+            btnItemHinzufuegenAbwaehlen.IsEnabled = false;
+            btnItemHinzufuegenAbwaehlen.Visibility = Visibility.Hidden;
+
+            btnItemHinzufuegenUpdate.IsEnabled = false;
+
+            btnItemHinzufuegenHinzufuegen.IsEnabled = true;
+            btnItemHinzufuegenHinzufuegen.Visibility = Visibility.Visible;
+
+            tBoxItemHinzufuegenName.Text = "";
+
+            ConsoleUI.ConsoleItem("Item: " + item.Name + " Update erfolgreich!");
+        }
+        #endregion
+
+        #region ComboBox
+        private void cbItemHinzufügenItems_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            if (cbItemHinzufügenItems.SelectedItem == null) return;
+
+            btnItemHinzufuegenHinzufuegen.IsEnabled = false;
+            btnItemHinzufuegenHinzufuegen.Visibility = Visibility.Hidden;
+
+            btnItemHinzufuegenAbwaehlen.IsEnabled = true;
+            btnItemHinzufuegenAbwaehlen.Visibility = Visibility.Visible;
+
+            btnItemHinzufuegenUpdate.IsEnabled = true;
+
+            Items item = (Items)cbItemHinzufügenItems.SelectedItem;
+            tBoxItemHinzufuegenName.Text = item.Name;
+
+            ConsoleUI.ConsoleItem("Item " + item.Name + " wurde ausgewählt");
+
+        }
+        #endregion
+
+        #endregion
+
         #region EVENT HINZUFÜGEN CONTENT
+
+        private void btnEventHinzufuegenHinzufuegen_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnEventHinzufuegenUpdate_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnEventHinzufuegenAbwaehlen_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         #endregion
 
@@ -421,6 +564,11 @@ namespace Crash_Fever_Manager
             btnEventTimer.Background = Brushes.LightBlue;
             grdEventTimer.Visibility = Visibility.Visible;
         }
+
+
+
+
+
         #endregion
 
         

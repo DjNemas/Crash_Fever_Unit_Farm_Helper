@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Crash_Fever_Manager"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
         Title="Crash Fever Manager" Height="1000" Width="1500">
 
@@ -87,7 +88,8 @@
 
         <!--#region Unit Übersicht -->
         <Grid x:Name="grdUnitUebersicht" Grid.Column="1" Visibility="Visible">
-
+            
+        <!--#region Grid Definition-->
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition />
@@ -96,11 +98,15 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-
+        <!--#endregion-->
+            
+            <!--#region Border -->
             <Border BorderThickness="0 3 3 3"/>
             <Border Grid.Column="1" BorderThickness="0 3 3 3"/>
             <Border Grid.Column="1" Grid.Row="1" BorderThickness="0 0 3 3"/>
-
+            <!--#endregion-->
+            
+            <!--#region Units-->
             <Label Content="Units" HorizontalContentAlignment="Center" FontSize="36"/>
             <Label Grid.Column="1" Content="Stats" HorizontalContentAlignment="Center" FontSize="36"/>
             <Grid Grid.Row="1">
@@ -154,7 +160,9 @@
                     </Grid>
                 </StackPanel>
             </Grid>
-
+            <!--#endregion-->
+            
+            <!--#region Stats-->
             <Grid Grid.Column="1" Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -220,6 +228,7 @@
                     <TextBox x:Name="tBoxUnitUebersichtAwakeItem5"/>
                 </StackPanel>
             </Grid>
+            <!--#endregion-->
         </Grid>
         <!--#endregion-->
 
@@ -325,7 +334,7 @@
             </StackPanel>
         </Grid>
         <!--#endregion-->
-        
+
         <!--#region Item Hinzufügen-->
         <Grid x:Name="grdItemHinzufuegen" Visibility="Hidden" Grid.Column="1">
 
@@ -359,24 +368,42 @@
             <Border Grid.Column="2" BorderThickness="0 3 3 3"/>
             <StackPanel>
                 <Label x:Name="lblItemHinzufuegenName" Content="Name"/>
-                <Label Content="Item"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="btnItemHinzufuegenHinzufuegen" Content="Hinzufügen" FontSize="20" Margin="3 3 0 3" Padding="2"/>
-                    <Button x:Name="btnItemHinzufuegenUpdate" Grid.Column="1" Content="Update" FontSize="20" Margin="3 3 3 3" Padding="2"/>
+                    <Button x:Name="btnItemHinzufuegenHinzufuegen"
+                            Content="Hinzufügen"
+                            FontSize="20"
+                            Margin="5 5 0 5"
+                            Padding="2"
+                            Click="btnItemHinzufuegenHinzufuegen_Click"/>
+                    <Button x:Name="btnItemHinzufuegenAbwaehlen"
+                            Content="Abwählen"
+                            FontSize="20"
+                            Margin="5 5 0 5"
+                            Padding="2"
+                            Visibility="Hidden"
+                            Click="btnItemHinzufuegenAbwaehlen_Click"/>
+                    <Button x:Name="btnItemHinzufuegenUpdate"
+                            Grid.Column="1"
+                            Content="Update"
+                            FontSize="20"
+                            Margin="5"
+                            Padding="2"
+                            Click="btnItemHinzufuegenUpdate_Click"/>
                 </Grid>
+                <ComboBox x:Name="cbItemHinzufügenItems" Margin="5 5 5 0" SelectionChanged="cbItemHinzufügenItems_SelectionChanged"/>
 
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <TextBox x:Name="tBoxItemHinzufuegenName"/>
-                <TextBox x:Name="tBoxItemHinzufuegenItem"/>
             </StackPanel>
             <StackPanel Grid.Column="2" >
                 <Label Content="Console" HorizontalContentAlignment="Center" FontSize="24"/>
-                <TextBlock x:Name="tBlockItemHinzufuegenConsole" 
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" MaxHeight="{Binding ElementName=grdItemHinzufuegen, Path=ActualHeight}">
+                    <TextBlock x:Name="tBlockItemHinzufuegenConsole" 
                            Background="Black" 
                            TextWrapping="Wrap" 
                            TextTrimming="WordEllipsis"
@@ -386,11 +413,12 @@
                            Margin="0 5 0 0" FontSize="14"
                            Padding="5"
                            />
+                </ScrollViewer>
             </StackPanel>
 
         </Grid>
         <!--#endregion-->
-        
+
         <!--#region Event Hinzufügen-->
         <Grid x:Name="grdEventHinzufuegen" Visibility="Hidden" Grid.Column="1">
 
@@ -414,6 +442,10 @@
                     <Setter Property="Margin" Value="5 5 5 0"/>
                     <Setter Property="Height" Value="{Binding ElementName=lblEventHinzufuegenName, Path=ActualHeight}"/>
                 </Style>
+                <Style TargetType="DatePicker">
+                    <Setter Property="Margin" Value="5 5 5 0"/>
+                    <Setter Property="Height" Value="{Binding ElementName=lblEventHinzufuegenName, Path=ActualHeight}"/>
+                </Style>
                 <Style TargetType="StackPanel">
                     <Setter Property="Margin" Value="5"/>
                 </Style>
@@ -426,24 +458,82 @@
                 <Label x:Name="lblEventHinzufuegenName" Content="Name"/>
                 <Label Content="Diff"/>
                 <Label Content="Item"/>
+                <Label Content="Datum Begin"/>
+                <Label Content="Uhrzeit Begin"/>
+                <Label Content="Datum Ende"/>
+                <Label Content="Uhrzeit Ende"/>
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="btnEventHinzufuegenHinzufuegen" Content="Hinzufügen" FontSize="20" Margin="3 3 0 3" Padding="2"/>
-                    <Button x:Name="btnEventHinzufuegenUpdate" Grid.Column="1" Content="Update" FontSize="20" Margin="3 3 3 3" Padding="2"/>
+                    <Button x:Name="btnEventHinzufuegenHinzufuegen"
+                            Content="Hinzufügen"
+                            FontSize="20"
+                            Margin="5 5 0 5"
+                            Padding="2"
+                            Click="btnEventHinzufuegenHinzufuegen_Click"/>
+                    <Button x:Name="btnEventHinzufuegenAbwaehlen"
+                            Content="Abwählen"
+                            FontSize="20"
+                            Margin="5 5 0 5"
+                            Padding="2"
+                            Visibility="Hidden"
+                            Click="btnEventHinzufuegenAbwaehlen_Click"/>
+                    <Button x:Name="btnEventHinzufuegenUpdate"
+                            Grid.Column="1"
+                            Content="Update"
+                            FontSize="20"
+                            Margin="5"
+                            Padding="2"
+                            Click="btnEventHinzufuegenUpdate_Click"/>
                 </Grid>
-
+                <ComboBox x:Name="cbEventHinzufügenEvents" Margin="5 5 5 0"/>
             </StackPanel>
             <StackPanel Grid.Column="1">
+                <StackPanel.Resources>
+                </StackPanel.Resources>
+
+
                 <TextBox x:Name="tBoxEventHinzufuegenName"/>
                 <TextBox x:Name="tBoxEventHinzufuegenDiff"/>
-                <TextBox x:Name="tBoxEventHinzufuegenItem1"/>
+                <TextBox x:Name="tBoxEventHinzufuegenItem"/>
+                <DatePicker Name="dpEventHinzufuegenDatumBegin" SelectedDateFormat="Short" IsTodayHighlighted="True" FirstDayOfWeek="Monday"/>
+                <Grid Margin="5 5 5 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <xctk:TimePicker x:Name="tpEventHinzufuegenBeginVon"
+                                     Margin="0 0 1 0"
+                                     Height="{Binding ElementName=lblEventHinzufuegenName, Path=ActualHeight}"
+                                     HorizontalContentAlignment="Center" />
+                    <xctk:TimePicker x:Name="tpEventHinzufuegenBeginBis" Grid.Column="1"
+                                     Margin="1 0 0 0"
+                                     Height="{Binding ElementName=lblEventHinzufuegenName, Path=ActualHeight}"
+                                     HorizontalContentAlignment="Center" />
+                </Grid>
+                <DatePicker Name="dpEventHinzufuegenDatumEnde" SelectedDateFormat="Short" IsTodayHighlighted="True" FirstDayOfWeek="Monday"/>
+                <Grid Margin="5 5 5 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <xctk:TimePicker x:Name="tpEventHinzufuegenEndeVon"
+                                     Margin="0 0 1 0"
+                                     Height="{Binding ElementName=lblEventHinzufuegenName, Path=ActualHeight}"
+                                     HorizontalContentAlignment="Center" />
+                    <xctk:TimePicker x:Name="tpEventHinzufuegenEndeBis"
+                                     Grid.Column="1" Margin="1 0 0 0"
+                                     Height="{Binding ElementName=lblEventHinzufuegenName, Path=ActualHeight}"
+                                     HorizontalContentAlignment="Center" />
+                </Grid>
+                
             </StackPanel>
             <StackPanel Grid.Column="2" >
                 <Label Content="Console" HorizontalContentAlignment="Center" FontSize="24"/>
-                <TextBlock x:Name="tBlockEventHinzufuegenConsole" 
+                <ScrollViewer HorizontalScrollBarVisibility="Auto" MaxHeight="{Binding ElementName=grdEventHinzufuegen, Path=ActualHeight}">
+                    <TextBlock x:Name="tBlockEventHinzufuegenConsole" 
                            Background="Black" 
                            TextWrapping="Wrap" 
                            TextTrimming="WordEllipsis"
@@ -453,8 +543,8 @@
                            Margin="0 5 0 0" FontSize="14"
                            Padding="5"
                            />
+                </ScrollViewer>
             </StackPanel>
-
         </Grid>
         <!--#endregion-->
 
@@ -687,6 +777,7 @@
 
         </Grid>
         <!--#endregion-->
+        
     </Grid>
 </Window>
  

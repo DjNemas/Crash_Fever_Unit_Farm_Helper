@@ -25,6 +25,16 @@ namespace Crash_Fever_Manager.datenbank.klassen
         public Items Item3 { get; set; }
         public Items Item4 { get; set; }
         public Items Item5 { get; set; }
+        public int Item1AnzahlHaben { get; set; }
+        public int Item1AnzahlBrauchen { get; set; }
+        public int Item2AnzahlHaben { get; set; }
+        public int Item2AnzahlBrauchen { get; set; }
+        public int Item3AnzahlHaben { get; set; }
+        public int Item3AnzahlBrauchen { get; set; }
+        public int Item4AnzahlHaben { get; set; }
+        public int Item4AnzahlBrauchen { get; set; }
+        public int Item5AnzahlHaben { get; set; }
+        public int Item5AnzahlBrauchen { get; set; }
 
         public override void AddToDB()
         {

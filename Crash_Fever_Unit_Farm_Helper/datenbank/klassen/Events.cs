@@ -16,7 +16,16 @@ namespace Crash_Fever_Manager.datenbank.klassen
 
         public string Diff { get; set; }
 
-        public Items item { get; set; }
+        public Items Item { get; set; }
+
+        public DateTime DatumBegin { get; set; }
+
+        public DateTime UhrzeitBegin { get; set; }
+
+        public DateTime DatumEnde { get; set; }
+
+        public DateTime UhrzeitEnde { get; set; }
+
 
         public override void AddToDB()
         {
