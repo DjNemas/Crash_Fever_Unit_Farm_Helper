@@ -4,13 +4,13 @@ using System.Text;
 
 namespace Crash_Fever_Manager.datenbank.klassen
 {
-    public abstract class ADatenbakenTabellen
+    public abstract class ADatenbakenTabellen<T>
     {
-        public abstract void AddUnitToDB();
-        public abstract void UpdateChanges(List<Units> units);
-        public abstract List<Units> GetAllUnitsFromDB();
-        public abstract Units GetSingleUnitFromDB(int unitID);
-        public abstract void UpdateSingleUnit(Units unit);
+        public abstract void AddToDB();
+        public abstract void UpdateChanges(List<T> units);
+        public abstract List<T> GetAllFromDB();
+        public abstract T GetSingleFromDB(int unitID);
+        public abstract void UpdateSingle(T unit);
         public abstract override string ToString();
 
     }

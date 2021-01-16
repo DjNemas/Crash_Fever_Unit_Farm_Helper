@@ -7,7 +7,7 @@ using static Crash_Fever_Manager.datenbank.klassen.Datenbank;
 
 namespace Crash_Fever_Manager.datenbank.klassen
 {
-    public class Units : ADatenbakenTabellen
+    public class Units : ADatenbakenTabellen<Units>
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -26,9 +26,9 @@ namespace Crash_Fever_Manager.datenbank.klassen
         public Items Item4 { get; set; }
         public Items Item5 { get; set; }
 
-        public override void AddUnitToDB()
+        public override void AddToDB()
         {
-            List<Units> units = GetUnitsDB(Datenbanken.Units);
+            List<Units> units = GetUnitsDB();
             int zähler = 1;
             if (units == null)
             {
@@ -57,14 +57,14 @@ namespace Crash_Fever_Manager.datenbank.klassen
             UpdateDatei(units, Datenbanken.Units);
         }
 
-        public override List<Units> GetAllUnitsFromDB()
+        public override List<Units> GetAllFromDB()
         {
-            return GetUnitsDB(Datenbanken.Units);
+            return GetUnitsDB();
         }
 
-        public override void UpdateSingleUnit(Units unit)
+        public override void UpdateSingle(Units unit)
         {
-            List<Units> unitsDB = GetUnitsDB(Datenbanken.Units);
+            List<Units> unitsDB = GetUnitsDB();
 
             for (int i = 0; i < unitsDB.Count; i++)
             {
@@ -76,9 +76,9 @@ namespace Crash_Fever_Manager.datenbank.klassen
             UpdateChanges(unitsDB);
         }
 
-        public override Units GetSingleUnitFromDB(int unitID)
+        public override Units GetSingleFromDB(int unitID)
         {
-            List<Units> resultDB = GetUnitsDB(Datenbanken.Units);
+            List<Units> resultDB = GetUnitsDB();
             Units result = new Units();
             bool unitGefunden = false;
             foreach (var item in resultDB)

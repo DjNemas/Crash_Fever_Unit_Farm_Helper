@@ -77,6 +77,7 @@
             <StackPanel Grid.Row="1">
                 <Button x:Name="btnUnitUebersicht" Content="Unit Übersicht" Click="btnUnitUebersicht_Click" Background="LightBlue"/>
                 <Button x:Name="btnUnitHinzufuegen" Content="Unit Hinzufügen" Click="btnUnitHinzufuegen_Click" />
+                <Button x:Name="btnItemHinzufuegen" Content="Item Hinzufügen" Click="btnItemHinzufuegen_Click"/>
                 <Button x:Name="btnEventHinzufuegen" Content="Event Hinzufügen" Click="btnEventHinzufuegen_Click" />
                 <Button x:Name="btnAwakeFarmen" Content="Awake Farmen" Click="btnAwakeFarmen_Click"/>
                 <Button x:Name="btnEventTimer" Content="Event Timer" Click="btnEventTimer_Click"/>
@@ -324,7 +325,72 @@
             </StackPanel>
         </Grid>
         <!--#endregion-->
+        
+        <!--#region Item Hinzufügen-->
+        <Grid x:Name="grdItemHinzufuegen" Visibility="Hidden" Grid.Column="1">
 
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.Resources>
+                <Style TargetType="Label">
+                    <Setter Property="FontSize" Value="22"/>
+                    <Setter Property="Margin" Value="5 5 5 0"/>
+                    <Setter Property="MinWidth" Value="200"/>
+                </Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="FontSize" Value="22"/>
+                    <Setter Property="TextWrapping" Value="Wrap"/>
+                    <Setter Property="Grid.Column" Value="1"/>
+                    <Setter Property="MinWidth" Value="250"/>
+                    <Setter Property="Margin" Value="5 5 5 0"/>
+                    <Setter Property="Height" Value="{Binding ElementName=lblItemHinzufuegenName, Path=ActualHeight}"/>
+                </Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Margin" Value="5"/>
+                </Style>
+            </Grid.Resources>
+
+            <Border BorderThickness="0 3 3 3"/>
+            <Border Grid.Column="1" BorderThickness="0 3 3 3"/>
+            <Border Grid.Column="2" BorderThickness="0 3 3 3"/>
+            <StackPanel>
+                <Label x:Name="lblItemHinzufuegenName" Content="Name"/>
+                <Label Content="Item"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnItemHinzufuegenHinzufuegen" Content="Hinzufügen" FontSize="20" Margin="3 3 0 3" Padding="2"/>
+                    <Button x:Name="btnItemHinzufuegenUpdate" Grid.Column="1" Content="Update" FontSize="20" Margin="3 3 3 3" Padding="2"/>
+                </Grid>
+
+            </StackPanel>
+            <StackPanel Grid.Column="1">
+                <TextBox x:Name="tBoxItemHinzufuegenName"/>
+                <TextBox x:Name="tBoxItemHinzufuegenItem"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" >
+                <Label Content="Console" HorizontalContentAlignment="Center" FontSize="24"/>
+                <TextBlock x:Name="tBlockItemHinzufuegenConsole" 
+                           Background="Black" 
+                           TextWrapping="Wrap" 
+                           TextTrimming="WordEllipsis"
+                           Width="auto" 
+                           Height="auto" 
+                           MinHeight="200"
+                           Margin="0 5 0 0" FontSize="14"
+                           Padding="5"
+                           />
+            </StackPanel>
+
+        </Grid>
+        <!--#endregion-->
+        
         <!--#region Event Hinzufügen-->
         <Grid x:Name="grdEventHinzufuegen" Visibility="Hidden" Grid.Column="1">
 

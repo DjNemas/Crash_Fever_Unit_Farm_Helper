@@ -1,39 +1,95 @@
-﻿using System;
+﻿using Crash_Fever_Manager.log.klassen;
+using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Windows.Media;
+using static Crash_Fever_Manager.datenbank.klassen.Datenbank;
 
 namespace Crash_Fever_Manager.datenbank.klassen
 {
-    public class Items : ADatenbakenTabellen
+    public class Items : ADatenbakenTabellen<Items>
     {
-        public override void AddUnitToDB()
+        public int ID { get; set; }
+
+        public string Name { get; set; }
+
+        public override void AddToDB()
         {
-            throw new NotImplementedException();
+            List<Items> items = GetItemsDB();
+            int zähler = 1;
+            if (items == null)
+            {
+                this.ID = zähler;
+                items = new List<Items>();
+                items.Add(this);
+            }
+            else
+            {
+                foreach (var item in items)
+                {
+                    if (item.ID == zähler)
+                    {
+                        zähler++;
+                    }
+                }
+                this.ID = zähler;
+                items.Insert(this.ID - 1, this);
+            }
+
+            UpdateDatei(items, Datenbanken.Items);
         }
 
-        public override List<Units> GetAllUnitsFromDB()
+        public override List<Items> GetAllFromDB()
         {
-            throw new NotImplementedException();
+            return GetItemsDB();
         }
 
-        public override Units GetSingleUnitFromDB(int unitID)
+        public override Items GetSingleFromDB(int itemID)
         {
-            throw new NotImplementedException();
+            List<Items> resultDB = GetItemsDB();
+            Items result = new Items();
+            bool itemGefunden = false;
+            foreach (var item in resultDB)
+            {
+                if (item.ID == itemID)
+                {
+                    itemGefunden = true;
+                    result = item;
+                    break;
+                }
+            }
+            if (itemGefunden)
+            {
+                return result;
+            }
+            else
+            {
+                ConsoleUI.ConsoleItem("Unit konnte nicht gefunden werden", Brushes.Red);
+                return null;
+            }
         }
 
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return this.Name;
         }
 
-        public override void UpdateChanges(List<Units> units)
+        public override void UpdateChanges(List<Items> items)
         {
-            throw new NotImplementedException();
+            UpdateDatei(items, Datenbanken.Items);
         }
 
-        public override void UpdateSingleUnit(Units unit)
+        public override void UpdateSingle(Items items)
         {
-            throw new NotImplementedException();
+            List<Items> itemsDB = GetItemsDB();
+
+            for (int i = 0; i < itemsDB.Count; i++)
+            {
+                if (itemsDB[i].ID == items.ID)
+                {
+                    itemsDB[i] = items;
+                }
+            }
+            UpdateChanges(itemsDB);
         }
     }
 }

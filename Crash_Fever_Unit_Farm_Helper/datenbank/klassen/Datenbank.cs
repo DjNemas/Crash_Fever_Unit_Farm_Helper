@@ -26,9 +26,9 @@ namespace Crash_Fever_Manager.datenbank.klassen
             
         }
 
-        public static List<Units> GetUnitsDB(Datenbanken dbs, int? byID = null)
+        public static List<Units> GetUnitsDB(int? byID = null)
         {
-            string datenbank = GetEnumDB(dbs);
+            string datenbank = GetEnumDB(Datenbanken.Units);
             StreamReader sr = null;
             try
             {
@@ -40,6 +40,42 @@ namespace Crash_Fever_Manager.datenbank.klassen
             }
             
             List<Units> obj = JsonConvert.DeserializeObject<List<Units>>(sr.ReadToEnd());
+            sr.Close();
+            return obj;
+        }
+
+        public static List<Items> GetItemsDB(int? byID = null)
+        {
+            string datenbank = GetEnumDB(Datenbanken.Items);
+            StreamReader sr = null;
+            try
+            {
+                sr = new StreamReader(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss + datenbank + ".json");
+            }
+            catch (Exception e)
+            {
+                Log.LogMain("Kann Datenbank Datei nicht lesen.\n" + e, Log.ErrorLevel.Error);
+            }
+
+            List<Items> obj = JsonConvert.DeserializeObject<List<Items>>(sr.ReadToEnd());
+            sr.Close();
+            return obj;
+        }
+
+        public static List<Events> GetEventsDB(int? byID = null)
+        {
+            string datenbank = GetEnumDB(Datenbanken.Events);
+            StreamReader sr = null;
+            try
+            {
+                sr = new StreamReader(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss + datenbank + ".json");
+            }
+            catch (Exception e)
+            {
+                Log.LogMain("Kann Datenbank Datei nicht lesen.\n" + e, Log.ErrorLevel.Error);
+            }
+
+            List<Events> obj = JsonConvert.DeserializeObject<List<Events>>(sr.ReadToEnd());
             sr.Close();
             return obj;
         }

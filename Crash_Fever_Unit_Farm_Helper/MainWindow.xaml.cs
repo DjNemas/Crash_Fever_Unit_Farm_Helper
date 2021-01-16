@@ -30,7 +30,7 @@ namespace Crash_Fever_Manager
 
             Units units = new Units();
             //Sort List
-            List<Units> unitsList = units.GetAllUnitsFromDB();
+            List<Units> unitsList = units.GetAllFromDB();
             unitsList = units.SortByName(unitsList);
             // Init UnitDBToList
             lBoxUnitUebersichtUnits.ItemsSource = unitsList;
@@ -53,6 +53,11 @@ namespace Crash_Fever_Manager
 
             ConsoleUI.ConsoleUnit("Neue Unit kann hinzugefügt werden.");
             ViewSelectUnitHinzufuegen();
+        }
+
+        private void btnItemHinzufuegen_Click(object sender, RoutedEventArgs e)
+        {
+            ViewSelectItemHinzufuegen();
         }
 
         private void btnEventHinzufuegen_Click(object sender, RoutedEventArgs e)
@@ -86,7 +91,7 @@ namespace Crash_Fever_Manager
         private void btnUnitUebersichtName_Click(object sender, RoutedEventArgs e)
         {
             Units unit = new Units();
-            List<Units> unitList = unit.GetAllUnitsFromDB();
+            List<Units> unitList = unit.GetAllFromDB();
             unitList = unit.SortByName(unitList);
             lBoxUnitUebersichtUnits.ItemsSource = null;
             lBoxUnitUebersichtUnits.ItemsSource = unitList;
@@ -95,7 +100,7 @@ namespace Crash_Fever_Manager
         private void btnUnitUebersichtStars_Click(object sender, RoutedEventArgs e)
         {
             Units unit = new Units();
-            List<Units> unitList = unit.GetAllUnitsFromDB();
+            List<Units> unitList = unit.GetAllFromDB();
             unitList = unit.SortByStars(unitList);
             lBoxUnitUebersichtUnits.ItemsSource = null;
             lBoxUnitUebersichtUnits.ItemsSource = unitList;
@@ -104,7 +109,7 @@ namespace Crash_Fever_Manager
         private void btnUnitUebersichtCosts_Click(object sender, RoutedEventArgs e)
         {
             Units unit = new Units();
-            List<Units> unitList = unit.GetAllUnitsFromDB();
+            List<Units> unitList = unit.GetAllFromDB();
             unitList = unit.SortByCosts(unitList);
             lBoxUnitUebersichtUnits.ItemsSource = null;
             lBoxUnitUebersichtUnits.ItemsSource = unitList;
@@ -118,7 +123,7 @@ namespace Crash_Fever_Manager
             lBoxUnitUebersichtUnits.ItemsSource = null;
 
             Units unit = new Units();
-            lBoxUnitUebersichtUnits.ItemsSource = unit.GetAllUnitsFromDB();
+            lBoxUnitUebersichtUnits.ItemsSource = unit.GetAllFromDB();
         }
         private void lBoxUnitUebersichtUnits_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
@@ -191,7 +196,7 @@ namespace Crash_Fever_Manager
             if (TextfeldLeerConsole(tBoxUnitHinzufuegenSkillLevelMax.Text).Equals("")) return;
             unit.SkillLevelMax = Convert.ToInt32(tBoxUnitHinzufuegenSkillLevelMax.Text);
 
-            unit.AddUnitToDB();
+            unit.AddToDB();
 
             this.UpdateListBoxUnitUebersicht();
             btnUnitUebersichtZuUnitUpdate.IsEnabled = false;
@@ -207,7 +212,7 @@ namespace Crash_Fever_Manager
         {
             Units unit = new Units();
             Units selectedUnit = (Units)lBoxUnitUebersichtUnits.SelectedItem;
-            unit = unit.GetSingleUnitFromDB(selectedUnit.ID);
+            unit = unit.GetSingleFromDB(selectedUnit.ID);
 
             if (TextfeldLeerConsole(tBoxUnitHinzufuegenName.Text).Equals("")) return;
             unit.Name = tBoxUnitHinzufuegenName.Text;
@@ -239,7 +244,7 @@ namespace Crash_Fever_Manager
             if (TextfeldLeerConsole(tBoxUnitHinzufuegenSkillLevelMax.Text).Equals("")) return;
             unit.SkillLevelMax = Convert.ToInt32(tBoxUnitHinzufuegenSkillLevelMax.Text);
 
-            unit.UpdateSingleUnit(unit);
+            unit.UpdateSingle(unit);
 
             UpdateListBoxUnitUebersicht();
             lBoxUnitUebersichtUnits.SelectedItem = null;
@@ -315,11 +320,13 @@ namespace Crash_Fever_Manager
         #region VIEW SELECTION
         private void ViewSelectUnitUebersicht()
         {
+            grdItemHinzufuegen.Visibility = Visibility.Hidden;
             grdUnitHinzufuegen.Visibility = Visibility.Hidden;
             grdAwakeFarmen.Visibility = Visibility.Hidden;
             grdEventHinzufuegen.Visibility = Visibility.Hidden;
             grdEventTimer.Visibility = Visibility.Hidden;
 
+            btnItemHinzufuegen.Background = Brushes.LightGray;
             btnUnitHinzufuegen.Background = Brushes.LightGray;
             btnAwakeFarmen.Background = Brushes.LightGray;
             btnEventHinzufuegen.Background = Brushes.LightGray;
@@ -330,11 +337,13 @@ namespace Crash_Fever_Manager
         }
         private void ViewSelectUnitHinzufuegen()
         {
+            grdItemHinzufuegen.Visibility = Visibility.Hidden;
             grdUnitUebersicht.Visibility = Visibility.Hidden;
             grdAwakeFarmen.Visibility = Visibility.Hidden;
             grdEventHinzufuegen.Visibility = Visibility.Hidden;
             grdEventTimer.Visibility = Visibility.Hidden;
 
+            btnItemHinzufuegen.Background = Brushes.LightGray;
             btnUnitUebersicht.Background = Brushes.LightGray;
             btnAwakeFarmen.Background = Brushes.LightGray;
             btnEventHinzufuegen.Background = Brushes.LightGray;
@@ -343,13 +352,33 @@ namespace Crash_Fever_Manager
             btnUnitHinzufuegen.Background = Brushes.LightBlue;
             grdUnitHinzufuegen.Visibility = Visibility.Visible;
         }
+        private void ViewSelectItemHinzufuegen()
+        {
+            grdEventTimer.Visibility = Visibility.Hidden;
+            grdUnitUebersicht.Visibility = Visibility.Hidden;
+            grdUnitHinzufuegen.Visibility = Visibility.Hidden;
+            grdEventHinzufuegen.Visibility = Visibility.Hidden;
+            grdAwakeFarmen.Visibility = Visibility.Hidden;
+
+            btnEventTimer.Background = Brushes.LightGray;
+            btnUnitUebersicht.Background = Brushes.LightGray;
+            btnUnitHinzufuegen.Background = Brushes.LightGray;
+            btnEventHinzufuegen.Background = Brushes.LightGray;
+            btnAwakeFarmen.Background = Brushes.LightGray;
+
+            grdItemHinzufuegen.Visibility = Visibility.Visible;
+            btnItemHinzufuegen.Background = Brushes.LightBlue;
+
+        }
         private void ViewSelectEventHinzufuegen()
         {
+            grdItemHinzufuegen.Visibility = Visibility.Hidden;
             grdUnitUebersicht.Visibility = Visibility.Hidden;
             grdAwakeFarmen.Visibility = Visibility.Hidden;
             grdUnitHinzufuegen.Visibility = Visibility.Hidden;
             grdEventTimer.Visibility = Visibility.Hidden;
 
+            btnItemHinzufuegen.Background = Brushes.LightGray;
             btnUnitUebersicht.Background = Brushes.LightGray;
             btnAwakeFarmen.Background = Brushes.LightGray;
             btnUnitHinzufuegen.Background = Brushes.LightGray;
@@ -360,11 +389,13 @@ namespace Crash_Fever_Manager
         }
         private void ViewSelectAwakeFarmen()
         {
+            grdItemHinzufuegen.Visibility = Visibility.Hidden;
             grdUnitUebersicht.Visibility = Visibility.Hidden;
             grdUnitHinzufuegen.Visibility = Visibility.Hidden;
             grdEventHinzufuegen.Visibility = Visibility.Hidden;
             grdEventTimer.Visibility = Visibility.Hidden;
 
+            btnItemHinzufuegen.Background = Brushes.LightGray;
             btnUnitUebersicht.Background = Brushes.LightGray;
             btnUnitHinzufuegen.Background = Brushes.LightGray;
             btnEventHinzufuegen.Background = Brushes.LightGray;
@@ -375,11 +406,13 @@ namespace Crash_Fever_Manager
         }
         private void ViewSelectEventTimer()
         {
+            grdItemHinzufuegen.Visibility = Visibility.Hidden;
             grdUnitUebersicht.Visibility = Visibility.Hidden;
             grdUnitHinzufuegen.Visibility = Visibility.Hidden;
             grdEventHinzufuegen.Visibility = Visibility.Hidden;
             grdAwakeFarmen.Visibility = Visibility.Hidden;
 
+            btnItemHinzufuegen.Background = Brushes.LightGray;
             btnUnitUebersicht.Background = Brushes.LightGray;
             btnUnitHinzufuegen.Background = Brushes.LightGray;
             btnEventHinzufuegen.Background = Brushes.LightGray;

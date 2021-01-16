@@ -1,39 +1,100 @@
-﻿using System;
+﻿using Crash_Fever_Manager.log.klassen;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Media;
+using static Crash_Fever_Manager.datenbank.klassen.Datenbank;
 
 namespace Crash_Fever_Manager.datenbank.klassen
 {
-    public class Events : ADatenbakenTabellen
+    public class Events : ADatenbakenTabellen<Events>
     {
-        public override void AddUnitToDB()
+
+        public int ID { get; set; }
+
+        public string Name { get; set; }
+
+        public string Diff { get; set; }
+
+        public Items item { get; set; }
+
+        public override void AddToDB()
         {
-            throw new NotImplementedException();
+            List<Events> events = GetEventsDB();
+            int zähler = 1;
+            if (events == null)
+            {
+                this.ID = zähler;
+                events = new List<Events>();
+                events.Add(this);
+            }
+            else
+            {
+                foreach (var item in events)
+                {
+                    if (item.ID == zähler)
+                    {
+                        zähler++;
+                    }
+                }
+                this.ID = zähler;
+                events.Insert(this.ID - 1, this);
+            }
+            UpdateDatei(events, Datenbanken.Events);
         }
 
-        public override List<Units> GetAllUnitsFromDB()
+        public override List<Events> GetAllFromDB()
         {
-            throw new NotImplementedException();
+            return GetEventsDB();
         }
 
-        public override Units GetSingleUnitFromDB(int unitID)
+        public override Events GetSingleFromDB(int eventID)
         {
-            throw new NotImplementedException();
+            List<Events> resultDB = GetEventsDB();
+            Events result = new Events();
+            bool eventGefunden = false;
+            foreach (var item in resultDB)
+            {
+                if (item.ID == eventID)
+                {
+                    eventGefunden = true;
+                    result = item;
+                    break;
+                }
+            }
+            if (eventGefunden)
+            {
+                return result;
+            }
+            else
+            {
+                ConsoleUI.ConsoleEvent("Unit konnte nicht gefunden werden", Brushes.Red);
+                return null;
+            }
         }
 
         public override string ToString()
         {
-            throw new NotImplementedException();
+            return this.Name + " Diff: " + this.Diff;
         }
 
-        public override void UpdateChanges(List<Units> units)
+        public override void UpdateChanges(List<Events> events)
         {
-            throw new NotImplementedException();
+            UpdateDatei(events, Datenbanken.Events);
         }
 
-        public override void UpdateSingleUnit(Units unit)
+        public override void UpdateSingle(Events events)
         {
-            throw new NotImplementedException();
+            List<Events> eventsDB = GetEventsDB();
+
+            for (int i = 0; i < eventsDB.Count; i++)
+            {
+                if (eventsDB[i].ID == events.ID)
+                {
+                    eventsDB[i] = events;
+                }
+            }
+            UpdateChanges(eventsDB);
         }
     }
 }
