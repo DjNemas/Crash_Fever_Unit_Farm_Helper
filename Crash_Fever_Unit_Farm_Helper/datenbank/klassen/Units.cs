@@ -3,10 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Media;
+using static Crash_Fever_Manager.datenbank.klassen.Datenbank;
 
 namespace Crash_Fever_Manager.datenbank.klassen
 {
-    public class Units
+    public class Units : ADatenbakenTabellen
     {
         public int ID { get; set; }
         public string Name { get; set; }
@@ -19,96 +20,108 @@ namespace Crash_Fever_Manager.datenbank.klassen
         public int LimitBreakBugs { get; set; }
         public int SkillLevel { get; set; }
         public int SkillLevelMax { get; set; }
-        public Item Item1 { get; set; }
-        public Item Item2 { get; set; }
-        public Item Item3 { get; set; }
-        public Item Item4 { get; set; }
-        public Item Item5 { get; set; }
+        public Items Item1 { get; set; }
+        public Items Item2 { get; set; }
+        public Items Item3 { get; set; }
+        public Items Item4 { get; set; }
+        public Items Item5 { get; set; }
 
-        [NonSerialized]
-        public static List<Units> unitDB;
-
-        [NonSerialized]
-        private static bool ListLoaded = false;
-
-        public Units() 
+        public override void AddUnitToDB()
         {
-            if (!ListLoaded)
-            {
-                ListLoaded = true;
-                unitDB = new List<Units>();
-                unitDB = Datenbank.GetUnitsDB("unit");
-            }
-        }
-
-        public Units AddUnitToList()
-        {
-            var units = Datenbank.GetUnitsDB("unit");
+            List<Units> units = GetUnitsDB(Datenbanken.Units);
             int zähler = 1;
-            foreach (var item in units)
+            if (units == null)
             {
-                if (item.ID == zähler)
-                {
-                    zähler++;
-                }
-            }
-            this.ID = zähler;
-            unitDB.Insert(this.ID - 1, this);
-            return this;
-        }
-
-        public void UpdateUnits()
-        {
-            Datenbank.UpdateDatei(unitDB, "unit");
-        }
-
-        public List<Units> GetUnits(int? unitID = null)
-        {
-            if (unitID == null)
-            {
-                return Datenbank.GetUnitsDB("unit");
-            }
-            else if(unitID > 0)
-            {
-                var result = Datenbank.GetUnitsDB("unit");
-                bool unitGefunden = false;
-                foreach (var item in result)
-                {
-                    if (item.ID == unitID)
-                    {
-                        unitGefunden = true;
-                        result = new List<Units>();
-                        result.Add(item);
-                        break;
-                    }
-                }
-                if (unitGefunden)
-                {
-                    return result;
-                }
-                else
-                {
-                    log.klassen.Console console = new log.klassen.Console();
-                    console.ConsoleUnit("Unit konnte nicht gefunden werden", Brushes.Red);
-                    return null;
-                }
+                this.ID = zähler;
+                units = new List<Units>();
+                units.Add(this);
             }
             else
             {
-                Log log = new Log();
-                log.LogMain("Unit konnte nicht aus der Datenbank gezogen werden! ID muss größer als 0 sein.", Log.ErrorLevel.Error);
-                return null;
+                foreach (var item in units)
+                {
+                    if (item.ID == zähler)
+                    {
+                        zähler++;
+                    }
+                }
+                this.ID = zähler;
+                units.Insert(this.ID - 1, this);
             }
+            
+            UpdateDatei(units, Datenbanken.Units);
         }
 
-        public override int GetHashCode()
+        public override void UpdateChanges(List<Units> units)
         {
-            return this.ID;
+            UpdateDatei(units, Datenbanken.Units);
+        }
+
+        public override List<Units> GetAllUnitsFromDB()
+        {
+            return GetUnitsDB(Datenbanken.Units);
+        }
+
+        public override void UpdateSingleUnit(Units unit)
+        {
+            List<Units> unitsDB = GetUnitsDB(Datenbanken.Units);
+
+            for (int i = 0; i < unitsDB.Count; i++)
+            {
+                if (unitsDB[i].ID == unit.ID)
+                {
+                    unitsDB[i] = unit;
+                }
+            }
+            UpdateChanges(unitsDB);
+        }
+
+        public override Units GetSingleUnitFromDB(int unitID)
+        {
+            List<Units> resultDB = GetUnitsDB(Datenbanken.Units);
+            Units result = new Units();
+            bool unitGefunden = false;
+            foreach (var item in resultDB)
+            {
+                if (item.ID == unitID)
+                {
+                    unitGefunden = true;
+                    result = item;
+                    break;
+                }
+            }
+            if (unitGefunden)
+            {
+                return result;
+            }
+            else
+            {
+                ConsoleUI.ConsoleUnit("Unit konnte nicht gefunden werden", Brushes.Red);
+                return null;
+            }
         }
 
         public override string ToString()
         {
             return this.Name + " Stars " + this.Stars + " Costs " + this.Costs;
+        }
+
+        public List<Units> SortByName(List<Units> list)
+        {
+            list.Sort((x, y) => string.Compare(x.Name, y.Name));
+            return list;
+        }
+
+        public List<Units> SortByStars(List<Units> list)
+        {
+            list.Sort((x,y) => x.Stars.CompareTo(y.Stars));
+            return list;
+        }
+
+        public List<Units> SortByCosts(List<Units> list)
+        {
+            list.Sort((x, y) => x.Costs.CompareTo(y.Costs));
+            return list;
         }
     }
 }

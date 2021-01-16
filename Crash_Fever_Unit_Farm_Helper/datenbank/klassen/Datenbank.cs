@@ -4,58 +4,113 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Crash_Fever_Manager.datenbank.klassen
 {
     public static class Datenbank
     {
-        private static Log _log = new Log();
-        private static log.klassen.Console _console = new log.klassen.Console();
-        private static bool _errorOrdner;
-        private static bool _existOrdner;
         private static readonly string _aktuellesVerzeichniss = Environment.CurrentDirectory;
         private static readonly string _dbOrdnerVerzeichniss = "/datenbank/json/";
+        // DB File Names
+        private static string units = "units";
+        private static string items = "items";
+        private static string events = "events";
 
-        public static void UpdateDatei(object unitsList, string datenbank)
+        public static void UpdateDatei(object unitsList, Datenbanken dbs)
         {
-            if (!_existOrdner)
-            {
-                _errorOrdner = ErstelleOrdner();
-            }
-
-            if (!_errorOrdner)
-            {
-                string JSONresult = JsonConvert.SerializeObject(unitsList);
-                StreamWriter sw = new StreamWriter(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss + datenbank + ".json", false);
-                sw.WriteLine(JSONresult);
-                sw.Close();
-            }
+            string datenbank = GetEnumDB(dbs);
+            string JSONresult = JsonConvert.SerializeObject(unitsList);
+            StreamWriter sw = new StreamWriter(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss + datenbank + ".json", false);
+            sw.WriteLine(JSONresult);
+            sw.Close();
+            
         }
 
-        public static List<Units> GetUnitsDB(string datenbank, int? byID = null)
+        public static List<Units> GetUnitsDB(Datenbanken dbs, int? byID = null)
         {
-            if (!_existOrdner)
+            string datenbank = GetEnumDB(dbs);
+            StreamReader sr = null;
+            try
             {
-                _errorOrdner = ErstelleOrdner();
+                sr = new StreamReader(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss + datenbank + ".json");
             }
-
-            if (!File.Exists(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss + datenbank + ".json"))
+            catch (Exception e)
             {
-                return null;
+                Log.LogMain("Kann Datenbank Datei nicht lesen.\n" + e, Log.ErrorLevel.Error);
             }
-
-            StreamReader sr = new StreamReader(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss + datenbank + ".json");
+            
             List<Units> obj = JsonConvert.DeserializeObject<List<Units>>(sr.ReadToEnd());
             sr.Close();
             return obj;
         }
 
-        private static bool ErstelleOrdner()
+        private static void ErstelleJsonDBDateien()
         {
-            Tools tool = new Tools();
-            _existOrdner = true;
-            return tool.ErstelleOrdner(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss, "/datenbank/json/");
+            string[] datenbankListe = new string[] { units, items, events };
+
+            foreach (var item in datenbankListe)
+            {
+                if (!File.Exists(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss + item + ".json"))
+                {
+                    
+                    FileStream file = File.Create(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss + item + ".json");
+                    file.Close();
+                }
+            }
+        }
+
+        private static void ErstelleOrdner()
+        {
+            try
+            {
+                // Determine whether the directory exists.
+                if (Directory.Exists(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss))
+                {
+                    Log.LogMain($"Der DB Ordner Existiert bereits", Log.ErrorLevel.Log);
+                }
+                else
+                {
+                    // Try to create the directory.
+                    DirectoryInfo di = Directory.CreateDirectory(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss);
+                    Log.LogMain($"Der DB Ordner wurde Erfolgreich um {Directory.GetCreationTime(_aktuellesVerzeichniss + _dbOrdnerVerzeichniss)} erstellt.", Log.ErrorLevel.Dev);
+                }
+
+            }
+            catch (Exception e)
+            {
+                Log.LogMain($"Beim erstellen vom DB Ordner ist ein Fehler aufgetretten Fehler:\n{e}", Log.ErrorLevel.Error);
+            }
+        }
+
+        public static void Init()
+        {
+            ErstelleOrdner();
+            ErstelleJsonDBDateien();
+        }
+
+        private static string GetEnumDB(Datenbanken dbs)
+        {
+            string str = "";
+            switch (dbs)
+            {
+                case Datenbanken.Units:
+                    str = units;
+                    break;
+                case Datenbanken.Items:
+                    str = items;
+                    break;
+                case Datenbanken.Events:
+                    str = events;
+                    break;
+            }
+            return str;
+        }
+        public enum Datenbanken
+        {
+            Units,
+            Items,
+            Events
+
         }
 
     }

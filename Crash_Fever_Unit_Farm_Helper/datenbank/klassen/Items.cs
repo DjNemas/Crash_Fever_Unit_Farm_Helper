@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Crash_Fever_Manager.datenbank.klassen
 {
-    public class Events : ADatenbakenTabellen
+    public class Items : ADatenbakenTabellen
     {
         public override void AddUnitToDB()
         {

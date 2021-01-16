@@ -13,5 +13,6 @@ namespace Crash_Fever_Manager
     /// </summary>
     public partial class App : Application
     {
+
     }
 }
