@@ -253,10 +253,11 @@
                     <Setter Property="MinWidth" Value="250"/>
                     <Setter Property="Margin" Value="5 5 5 0"/>
                     <Setter Property="Height" Value="{Binding ElementName=lblUnitHinzufuegenName, Path=ActualHeight}"/>
-                </Style>
+                </Style>                
                 <Style TargetType="StackPanel">
                     <Setter Property="Margin" Value="5"/>
                 </Style>
+                
             </Grid.Resources>
             <!--#endregion-->
 
@@ -311,11 +312,57 @@
                 <TextBox x:Name="tBoxUnitHinzufuegenLimitBreakBugs" PreviewTextInput="OnlyNumber"/>
                 <TextBox x:Name="tBoxUnitHinzufuegenSkillLevel" PreviewTextInput="OnlyNumber"/>
                 <TextBox x:Name="tBoxUnitHinzufuegenSkillLevelMax" PreviewTextInput="OnlyNumber"/>
-                <TextBox x:Name="tBoxUnitHinzufuegenAwakeItem1"/>
-                <TextBox x:Name="tBoxUnitHinzufuegenAwakeItem2"/>
-                <TextBox x:Name="tBoxUnitHinzufuegenAwakeItem3"/>
-                <TextBox x:Name="tBoxUnitHinzufuegenAwakeItem4"/>
-                <TextBox x:Name="tBoxUnitHinzufuegenAwakeItem5"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.Resources>
+                        <Style TargetType="CheckBox">
+                            <Setter Property="Margin" Value="5 5 5 0"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="Height" Value="{Binding ElementName=lblUnitHinzufuegenName, Path=ActualHeight}"/>
+                        </Style>
+                        <Style TargetType="ComboBox">
+                            <Setter Property="Margin" Value="5 5 5 0"/>
+                            <Setter Property="Height" Value="{Binding ElementName=lblUnitHinzufuegenName, Path=ActualHeight}"/>
+                            <Setter Property="FontSize" Value="20"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                        </Style>
+                    </Grid.Resources>
+                    
+                    <StackPanel Margin="0">
+                        <ComboBox x:Name="cbUnitHinzufuegenAwakeItem1" />
+                        <ComboBox x:Name="cbUnitHinzufuegenAwakeItem2" />
+                        <ComboBox x:Name="cbUnitHinzufuegenAwakeItem3" />
+                        <ComboBox x:Name="cbUnitHinzufuegenAwakeItem4" />
+                        <ComboBox x:Name="cbUnitHinzufuegenAwakeItem5" />
+                    </StackPanel>
+                    <StackPanel Grid.Column="1" Margin="0">
+                        <CheckBox x:Name="cBoxUnitHinzufuegenLeer1"
+                                  Content="Leer"
+                                  Checked="cBoxUnitHinzufuegenLeer1_Checked"
+                                  Unchecked="cBoxUnitHinzufuegenLeer1_Unchecked"/>
+                        <CheckBox x:Name="cBoxUnitHinzufuegenLeer2"
+                                  Content="Leer"
+                                  Checked="cBoxUnitHinzufuegenLeer2_Checked"
+                                  Unchecked="cBoxUnitHinzufuegenLeer2_Unchecked"/>
+                        <CheckBox x:Name="cBoxUnitHinzufuegenLeer3"
+                                  Content="Leer"
+                                  Checked="cBoxUnitHinzufuegenLeer3_Checked"
+                                  Unchecked="cBoxUnitHinzufuegenLeer3_Unchecked"/>
+                        <CheckBox x:Name="cBoxUnitHinzufuegenLeer4"
+                                  Content="Leer"
+                                  Checked="cBoxUnitHinzufuegenLeer4_Checked"
+                                  Unchecked="cBoxUnitHinzufuegenLeer4_Unchecked"/>
+                        <CheckBox x:Name="cBoxUnitHinzufuegenLeer5"
+                                  Content="Leer"
+                                  Checked="cBoxUnitHinzufuegenLeer5_Checked"
+                                  Unchecked="cBoxUnitHinzufuegenLeer5_Unchecked"/>
+                    </StackPanel>
+                </Grid>
+                
             </StackPanel>
             <StackPanel Grid.Column="2" >
                 <Label Content="Console" HorizontalContentAlignment="Center" FontSize="24"/>
@@ -361,6 +408,12 @@
                 <Style TargetType="StackPanel">
                     <Setter Property="Margin" Value="5"/>
                 </Style>
+                <Style TargetType="ComboBox">
+                    <Setter Property="Margin" Value="5 5 5 0"/>
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                    <Setter Property="Height" Value="{Binding ElementName=lblItemHinzufuegenName, Path=ActualHeight}"/>
+                </Style>
             </Grid.Resources>
 
             <Border BorderThickness="0 3 3 3"/>
@@ -394,7 +447,7 @@
                             Padding="2"
                             Click="btnItemHinzufuegenUpdate_Click"/>
                 </Grid>
-                <ComboBox x:Name="cbItemHinzufügenItems" Margin="5 5 5 0" SelectionChanged="cbItemHinzufügenItems_SelectionChanged"/>
+                <ComboBox x:Name="cbItemHinzufügenItems" SelectionChanged="cbItemHinzufügenItems_SelectionChanged"/>
 
             </StackPanel>
             <StackPanel Grid.Column="1">
@@ -419,7 +472,8 @@
         </Grid>
         <!--#endregion-->
 
-        <!--#region Event Hinzufügen-->
+        
+<!--#region Event Hinzufügen-->
         <Grid x:Name="grdEventHinzufuegen" Visibility="Hidden" Grid.Column="1">
 
             <Grid.ColumnDefinitions>
@@ -441,6 +495,12 @@
                     <Setter Property="MinWidth" Value="250"/>
                     <Setter Property="Margin" Value="5 5 5 0"/>
                     <Setter Property="Height" Value="{Binding ElementName=lblEventHinzufuegenName, Path=ActualHeight}"/>
+                </Style>
+                <Style TargetType="ComboBox">
+                    <Setter Property="Margin" Value="5 5 5 0"/>
+                    <Setter Property="Height" Value="{Binding ElementName=lblEventHinzufuegenName, Path=ActualHeight}"/>
+                    <Setter Property="FontSize" Value="20"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
                 </Style>
                 <Style TargetType="DatePicker">
                     <Setter Property="Margin" Value="5 5 5 0"/>
@@ -488,22 +548,29 @@
                             Padding="2"
                             Click="btnEventHinzufuegenUpdate_Click"/>
                 </Grid>
-                <ComboBox x:Name="cbEventHinzufügenEvents" Margin="5 5 5 0"/>
+                <ComboBox x:Name="cbEventHinzufügenEvents" SelectionChanged="cbEventHinzufügenEvents_SelectionChanged"/>
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <StackPanel.Resources>
                 </StackPanel.Resources>
 
-
                 <TextBox x:Name="tBoxEventHinzufuegenName"/>
                 <TextBox x:Name="tBoxEventHinzufuegenDiff"/>
-                <TextBox x:Name="tBoxEventHinzufuegenItem"/>
+                <ComboBox x:Name="cbEventHinzufuegenItem"/>
                 <DatePicker Name="dpEventHinzufuegenDatumBegin" SelectedDateFormat="Short" IsTodayHighlighted="True" FirstDayOfWeek="Monday"/>
                 <Grid Margin="5 5 5 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+
+                    <Grid.Resources>
+                        <Style TargetType="xctk:TimePicker">
+                            <Setter Property="Margin" Value="5 5 5 0"/>
+                            <Setter Property="Height" Value="{Binding ElementName=lblEventHinzufuegenName, Path=ActualHeight}"/>
+                        </Style>
+                    </Grid.Resources>
+                    
                     <xctk:TimePicker x:Name="tpEventHinzufuegenBeginVon"
                                      Margin="0 0 1 0"
                                      Height="{Binding ElementName=lblEventHinzufuegenName, Path=ActualHeight}"
@@ -519,6 +586,14 @@
                         <ColumnDefinition />
                         <ColumnDefinition />
                     </Grid.ColumnDefinitions>
+
+                    <Grid.Resources>
+                        <Style TargetType="xctk:TimePicker">
+                            <Setter Property="Margin" Value="5 5 5 0"/>
+                            <Setter Property="Height" Value="{Binding ElementName=lblEventHinzufuegenName, Path=ActualHeight}"/>
+                        </Style>
+                    </Grid.Resources>
+
                     <xctk:TimePicker x:Name="tpEventHinzufuegenEndeVon"
                                      Margin="0 0 1 0"
                                      Height="{Binding ElementName=lblEventHinzufuegenName, Path=ActualHeight}"

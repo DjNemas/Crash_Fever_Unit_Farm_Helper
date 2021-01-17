@@ -133,5 +133,37 @@ namespace Crash_Fever_Manager.datenbank.klassen
             list.Sort((x, y) => x.Costs.CompareTo(y.Costs));
             return list;
         }
+
+        public void UpdateItem(List<Units> units, Items item)
+        {
+            for (int i = 0; i < units.Count; i++)
+            {
+                if (units[i].Item1 != null && units[i].Item1.ID == item.ID)
+                {
+                    units[i].Item1 = item;
+                    UpdateSingle(units[i]);
+                }
+                if (units[i].Item2 != null && units[i].Item2.ID == item.ID)
+                {
+                    units[i].Item2 = item;
+                    UpdateSingle(units[i]);
+                }
+                if (units[i].Item3 != null && units[i].Item3.ID == item.ID)
+                {
+                    units[i].Item3 = item;
+                    UpdateSingle(units[i]);
+                }
+                if (units[i].Item4 != null && units[i].Item4.ID == item.ID)
+                {
+                    units[i].Item4 = item;
+                    UpdateSingle(units[i]);
+                }
+                if (units[i].Item5 != null && units[i].Item5.ID == item.ID)
+                {
+                    units[i].Item5 = item;
+                    UpdateSingle(units[i]);
+                }
+            }
+        }
     }
 }

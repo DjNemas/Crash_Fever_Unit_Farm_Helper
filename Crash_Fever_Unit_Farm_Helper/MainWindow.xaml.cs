@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
 
 namespace Crash_Fever_Manager
@@ -46,21 +47,41 @@ namespace Crash_Fever_Manager
                 itemsList = items.SortByName(itemsList);
             }
             cbItemHinzufügenItems.ItemsSource = itemsList;
+            cbUnitHinzufuegenAwakeItem1.ItemsSource = itemsList;
+            cbUnitHinzufuegenAwakeItem2.ItemsSource = itemsList;
+            cbUnitHinzufuegenAwakeItem3.ItemsSource = itemsList;
+            cbUnitHinzufuegenAwakeItem4.ItemsSource = itemsList;
+            cbUnitHinzufuegenAwakeItem5.ItemsSource = itemsList;
+            cbEventHinzufuegenItem.ItemsSource = itemsList;
         }
 
         #region MENÜ BUTTONS
         private void btnUnitUebersicht_Click(object sender, RoutedEventArgs e)
         {
+            lBoxUnitUebersichtUnits.SelectedItem = null;
             ViewSelectUnitUebersicht();
+            ClearTextBoxUnitUebersicht();
         }
 
         private void btnUnitHinzufuegen_Click(object sender, RoutedEventArgs e)
         {
             ClearTextBoxUnitHinzufügen();
+            SetComboBoxUnitsHinzufuegenNull();
             lBoxUnitUebersichtUnits.SelectedItem = null;
             btnUnitUebersichtZuUnitUpdate.IsEnabled = false;
             btnUnitHinzufuegenUnitUpdate.IsEnabled = false;
             btnUnitHinzufuegenHinzufuegen.IsEnabled = true;
+
+            cBoxUnitHinzufuegenLeer1.IsChecked = false;
+            cBoxUnitHinzufuegenLeer2.IsChecked = false;
+            cBoxUnitHinzufuegenLeer3.IsChecked = false;
+            cBoxUnitHinzufuegenLeer4.IsChecked = false;
+            cBoxUnitHinzufuegenLeer5.IsChecked = false;
+            cbUnitHinzufuegenAwakeItem1.IsEnabled = true;
+            cbUnitHinzufuegenAwakeItem2.IsEnabled = true;
+            cbUnitHinzufuegenAwakeItem3.IsEnabled = true;
+            cbUnitHinzufuegenAwakeItem4.IsEnabled = true;
+            cbUnitHinzufuegenAwakeItem5.IsEnabled = true;
 
             ConsoleUI.ConsoleUnit("Neue Unit kann hinzugefügt werden.");
             ViewSelectUnitHinzufuegen();
@@ -160,7 +181,8 @@ namespace Crash_Fever_Manager
             lBoxUnitUebersichtUnits.ItemsSource = null;
 
             Units unit = new Units();
-            lBoxUnitUebersichtUnits.ItemsSource = unit.GetAllFromDB();
+            List<Units> unitList = unit.SortByName(unit.GetAllFromDB());
+            lBoxUnitUebersichtUnits.ItemsSource = unitList;
         }
         private void lBoxUnitUebersichtUnits_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
@@ -178,6 +200,26 @@ namespace Crash_Fever_Manager
                 tBoxUnitUebersichtLimitBreakBugs.Text = unit.LimitBreakBugs.ToString();
                 tBoxUnitUebersichtSkillLevel.Text = unit.SkillLevel.ToString();
                 tBoxUnitUebersichtSkillLevelMax.Text = unit.SkillLevelMax.ToString();
+                if (unit.Item1 != null)
+                    tBoxUnitUebersichtAwakeItem1.Text = unit.Item1.Name.ToString();
+                else
+                    tBoxUnitUebersichtAwakeItem1.Text = "";
+                if (unit.Item2 != null)
+                    tBoxUnitUebersichtAwakeItem2.Text = unit.Item2.Name.ToString();
+                else
+                    tBoxUnitUebersichtAwakeItem2.Text = "";
+                if (unit.Item3 != null)
+                    tBoxUnitUebersichtAwakeItem3.Text = unit.Item3.Name.ToString();
+                else
+                    tBoxUnitUebersichtAwakeItem3.Text = "";
+                if (unit.Item4 != null)
+                    tBoxUnitUebersichtAwakeItem4.Text = unit.Item4.Name.ToString();
+                else
+                    tBoxUnitUebersichtAwakeItem4.Text = "";
+                if (unit.Item5 != null)
+                    tBoxUnitUebersichtAwakeItem5.Text = unit.Item5.Name.ToString();
+                else
+                    tBoxUnitUebersichtAwakeItem5.Text = "";
 
                 // Display Unit Hinzufügen
                 tBoxUnitHinzufuegenName.Text = unit.Name;
@@ -190,8 +232,129 @@ namespace Crash_Fever_Manager
                 tBoxUnitHinzufuegenLimitBreakBugs.Text = unit.LimitBreakBugs.ToString();
                 tBoxUnitHinzufuegenSkillLevel.Text = unit.SkillLevel.ToString();
                 tBoxUnitHinzufuegenSkillLevelMax.Text = unit.SkillLevelMax.ToString();
+
+                Items item = new Items();
+                List<Items> items = item.GetAllFromDB();
+                UpdateUnitHinzufuegenComboBox(items);
+                UpdateComboBoxUnitHinzufuegen(unit, items);
+
                 btnUnitUebersichtZuUnitUpdate.IsEnabled = true;
             }
+        }
+
+        private void UpdateComboBoxUnitHinzufuegen(Units unit, List<Items> items)
+        {
+            if (unit.Item1 != null)
+            {
+                foreach (var itemResult in items)
+                {
+                    if (itemResult.ID == unit.Item1.ID)
+                    {
+                        cbUnitHinzufuegenAwakeItem1.SelectedIndex = itemResult.ID - 1;
+                    }
+                }
+            }
+            else
+            {
+                cbUnitHinzufuegenAwakeItem1.SelectedItem = null;
+            }
+
+            if (unit.Item2 != null)
+            {
+                foreach (var itemResult in items)
+                {
+                    if (itemResult.ID == unit.Item2.ID)
+                    {
+                        cbUnitHinzufuegenAwakeItem2.SelectedIndex = itemResult.ID - 1;
+                    }
+                }
+            }
+            else
+            {
+                cbUnitHinzufuegenAwakeItem2.SelectedItem = null;
+            }
+
+            if (unit.Item3 != null)
+            {
+                foreach (var itemResult in items)
+                {
+                    if (itemResult.ID == unit.Item3.ID)
+                    {
+                        cbUnitHinzufuegenAwakeItem3.SelectedIndex = itemResult.ID - 1;
+                    }
+                }
+            }
+            else
+            {
+                cbUnitHinzufuegenAwakeItem3.SelectedItem = null;
+            }
+
+            if (unit.Item4 != null)
+            {
+                foreach (var itemResult in items)
+                {
+                    if (itemResult.ID == unit.Item4.ID)
+                    {
+                        cbUnitHinzufuegenAwakeItem4.SelectedIndex = itemResult.ID - 1;
+                    }
+                }
+            }
+            else
+            {
+                cbUnitHinzufuegenAwakeItem4.SelectedItem = null;
+            }
+
+            if (unit.Item5 != null)
+            {
+                foreach (var itemResult in items)
+                {
+                    if (itemResult.ID == unit.Item5.ID)
+                    {
+                        cbUnitHinzufuegenAwakeItem5.SelectedIndex = itemResult.ID - 1;
+                    }
+                }
+            }
+            else
+            {
+                cbUnitHinzufuegenAwakeItem5.SelectedItem = null;
+            }
+        }
+
+        private void UpdateUnitHinzufuegenComboBox(List<Items> items)
+        {
+            cbUnitHinzufuegenAwakeItem1.ItemsSource = null;
+            cbUnitHinzufuegenAwakeItem2.ItemsSource = null;
+            cbUnitHinzufuegenAwakeItem3.ItemsSource = null;
+            cbUnitHinzufuegenAwakeItem4.ItemsSource = null;
+            cbUnitHinzufuegenAwakeItem5.ItemsSource = null;
+
+            cbUnitHinzufuegenAwakeItem1.ItemsSource = items;
+            cbUnitHinzufuegenAwakeItem2.ItemsSource = items;
+            cbUnitHinzufuegenAwakeItem3.ItemsSource = items;
+            cbUnitHinzufuegenAwakeItem4.ItemsSource = items;
+            cbUnitHinzufuegenAwakeItem5.ItemsSource = items;
+        }
+
+        #endregion
+
+        #region TEXTBOX
+        private void ClearTextBoxUnitUebersicht()
+        {
+            tBoxUnitUebersichtName.Text = "";
+            tBoxUnitUebersichtCosts.Text = "";
+            tBoxUnitUebersichtStars.Text = "";
+            tBoxUnitUebersichtElement.Text = "";
+            tBoxUnitUebersichtLevel.Text = "";
+            tBoxUnitUebersichtBugs.Text = "";
+            tBoxUnitUebersichtLimitBreak.Text = "";
+            tBoxUnitUebersichtLimitBreakBugs.Text = "";
+            tBoxUnitUebersichtSkillLevel.Text = "";
+            tBoxUnitUebersichtSkillLevelMax.Text = "";
+            tBoxUnitUebersichtAwakeItem1.Text = "";
+            tBoxUnitUebersichtAwakeItem2.Text = "";
+            tBoxUnitUebersichtAwakeItem3.Text = "";
+            tBoxUnitUebersichtAwakeItem4.Text = "";
+            tBoxUnitUebersichtAwakeItem5.Text = "";
         }
         #endregion
 
@@ -233,6 +396,31 @@ namespace Crash_Fever_Manager
             if (TextfeldLeerConsole(tBoxUnitHinzufuegenSkillLevelMax.Text).Equals("")) return;
             unit.SkillLevelMax = Convert.ToInt32(tBoxUnitHinzufuegenSkillLevelMax.Text);
 
+            if (cBoxUnitHinzufuegenLeer1.IsChecked == true)
+                unit.Item1 = null;
+            else
+                unit.Item1 = (Items)cbUnitHinzufuegenAwakeItem1.SelectedItem;
+
+            if (cBoxUnitHinzufuegenLeer2.IsChecked == true)
+                unit.Item2 = null;
+            else
+                unit.Item2 = (Items)cbUnitHinzufuegenAwakeItem2.SelectedItem;
+
+            if (cBoxUnitHinzufuegenLeer3.IsChecked == true)
+                unit.Item3 = null;
+            else
+                unit.Item3 = (Items)cbUnitHinzufuegenAwakeItem3.SelectedItem;
+
+            if (cBoxUnitHinzufuegenLeer4.IsChecked == true)
+                unit.Item4 = null;
+            else
+                unit.Item4 = (Items)cbUnitHinzufuegenAwakeItem4.SelectedItem;
+
+            if (cBoxUnitHinzufuegenLeer5.IsChecked == true)
+                unit.Item5 = null;
+            else
+                unit.Item5 = (Items)cbUnitHinzufuegenAwakeItem5.SelectedItem;
+
             unit.AddToDB();
 
             this.UpdateListBoxUnitUebersicht();
@@ -242,6 +430,7 @@ namespace Crash_Fever_Manager
             ConsoleUI.ConsoleUnit("Unit " + unit.Name + " wurde Hinzugefügt!");
 
             ClearTextBoxUnitHinzufügen();
+            SetComboBoxUnitsHinzufuegenNull();
 
         }
 
@@ -272,6 +461,31 @@ namespace Crash_Fever_Manager
             unit.SkillLevel = Convert.ToInt32(tBoxUnitHinzufuegenSkillLevel.Text);
             unit.SkillLevelMax = Convert.ToInt32(tBoxUnitHinzufuegenSkillLevelMax.Text);
 
+            if (cBoxUnitHinzufuegenLeer1.IsChecked == true)
+                unit.Item1 = null;
+            else
+                unit.Item1 = (Items)cbUnitHinzufuegenAwakeItem1.SelectedItem;
+
+            if (cBoxUnitHinzufuegenLeer2.IsChecked == true)
+                unit.Item2 = null;
+            else
+                unit.Item2 = (Items)cbUnitHinzufuegenAwakeItem2.SelectedItem;
+
+            if (cBoxUnitHinzufuegenLeer3.IsChecked == true)
+                unit.Item3 = null;
+            else
+                unit.Item3 = (Items)cbUnitHinzufuegenAwakeItem3.SelectedItem;
+
+            if (cBoxUnitHinzufuegenLeer4.IsChecked == true)
+                unit.Item4 = null;
+            else
+                unit.Item4 = (Items)cbUnitHinzufuegenAwakeItem4.SelectedItem;
+
+            if (cBoxUnitHinzufuegenLeer5.IsChecked == true)
+                unit.Item5 = null;
+            else
+                unit.Item5 = (Items)cbUnitHinzufuegenAwakeItem5.SelectedItem;
+
             unit.UpdateSingle(unit);
 
             UpdateListBoxUnitUebersicht();
@@ -280,9 +494,10 @@ namespace Crash_Fever_Manager
             btnUnitHinzufuegenUnitUpdate.IsEnabled = false;
             btnUnitHinzufuegenHinzufuegen.IsEnabled = true;
 
-            ConsoleUI.ConsoleUnit("Unit: " + unit.Name + " Update erfolgreich!");
-
             ClearTextBoxUnitHinzufügen();
+            SetComboBoxUnitsHinzufuegenNull();
+
+            ConsoleUI.ConsoleUnit("Unit: " + unit.Name + " Update erfolgreich!");
         }
         #endregion
 
@@ -300,6 +515,68 @@ namespace Crash_Fever_Manager
             tBoxUnitHinzufuegenSkillLevel.Text = "";
             tBoxUnitHinzufuegenSkillLevelMax.Text = "";
         }
+
+        private void SetComboBoxUnitsHinzufuegenNull()
+        {
+            cbUnitHinzufuegenAwakeItem1.SelectedItem = null;
+            cbUnitHinzufuegenAwakeItem2.SelectedItem = null;
+            cbUnitHinzufuegenAwakeItem3.SelectedItem = null;
+            cbUnitHinzufuegenAwakeItem4.SelectedItem = null;
+            cbUnitHinzufuegenAwakeItem5.SelectedItem = null;
+        }
+        #endregion
+
+        #region CHECKBOX
+        private void cBoxUnitHinzufuegenLeer1_Checked(object sender, RoutedEventArgs e)
+        {
+            cbUnitHinzufuegenAwakeItem1.IsEnabled = false;
+        }
+
+        private void cBoxUnitHinzufuegenLeer1_Unchecked(object sender, RoutedEventArgs e)
+        {
+            cbUnitHinzufuegenAwakeItem1.IsEnabled = true;
+        }
+
+        private void cBoxUnitHinzufuegenLeer2_Checked(object sender, RoutedEventArgs e)
+        {
+            cbUnitHinzufuegenAwakeItem2.IsEnabled = false;
+        }
+
+        private void cBoxUnitHinzufuegenLeer2_Unchecked(object sender, RoutedEventArgs e)
+        {
+            cbUnitHinzufuegenAwakeItem2.IsEnabled = true;
+        }
+
+        private void cBoxUnitHinzufuegenLeer3_Checked(object sender, RoutedEventArgs e)
+        {
+            cbUnitHinzufuegenAwakeItem3.IsEnabled = false;
+        }
+
+        private void cBoxUnitHinzufuegenLeer3_Unchecked(object sender, RoutedEventArgs e)
+        {
+            cbUnitHinzufuegenAwakeItem3.IsEnabled = true;
+        }
+
+        private void cBoxUnitHinzufuegenLeer4_Checked(object sender, RoutedEventArgs e)
+        {
+            cbUnitHinzufuegenAwakeItem4.IsEnabled = false;
+        }
+
+        private void cBoxUnitHinzufuegenLeer4_Unchecked(object sender, RoutedEventArgs e)
+        {
+            cbUnitHinzufuegenAwakeItem4.IsEnabled = true;
+        }
+
+        private void cBoxUnitHinzufuegenLeer5_Checked(object sender, RoutedEventArgs e)
+        {
+            cbUnitHinzufuegenAwakeItem5.IsEnabled = false;
+        }
+
+        private void cBoxUnitHinzufuegenLeer5_Unchecked(object sender, RoutedEventArgs e)
+        {
+            cbUnitHinzufuegenAwakeItem5.IsEnabled = true;
+        }
+
         #endregion
 
         #endregion
@@ -367,6 +644,12 @@ namespace Crash_Fever_Manager
 
             cbItemHinzufügenItems.ItemsSource = itemsList;
 
+            Units unit = new Units();
+            List<Units> units = unit.GetAllFromDB();
+            unit.UpdateItem(units, item);
+
+            UpdateListBoxUnitUebersicht();
+
             btnItemHinzufuegenAbwaehlen.IsEnabled = false;
             btnItemHinzufuegenAbwaehlen.Visibility = Visibility.Hidden;
 
@@ -406,6 +689,7 @@ namespace Crash_Fever_Manager
 
         #region EVENT HINZUFÜGEN CONTENT
 
+        #region BUTTONS
         private void btnEventHinzufuegenHinzufuegen_Click(object sender, RoutedEventArgs e)
         {
 
@@ -420,6 +704,15 @@ namespace Crash_Fever_Manager
         {
 
         }
+        #endregion
+
+        #region CHECKBOX
+        private void cbEventHinzufügenEvents_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
+        }
+
+        #endregion
 
         #endregion
 
@@ -564,11 +857,6 @@ namespace Crash_Fever_Manager
             btnEventTimer.Background = Brushes.LightBlue;
             grdEventTimer.Visibility = Visibility.Visible;
         }
-
-
-
-
-
         #endregion
 
         
